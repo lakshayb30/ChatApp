@@ -1,0 +1,22 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run dev --prefix chatapp-fe\" \"npm run dev --prefix chatapp-be\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakshayb30/ChatApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lakshayb30/ChatApp/issues"
+  },
+  "homepage": "https://github.com/lakshayb30/ChatApp#readme"
+}
