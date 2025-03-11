@@ -2,19 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 export default function App() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<string>([]);
   const [joined, setJoined] = useState(false);
-  const [roomID, setRoomID] = useState();
-  const wsRef = useRef();
-  const inputRef = useRef();
-  const nameRef = useRef();
-  const idRef = useRef();
+  const [roomID, setRoomID] = useState<string | null>();
+  const wsRef = useRef<WebSocket | null>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const idRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    
+
     const ws = new WebSocket("ws://localhost:8080");
 
     ws.onmessage = (e) => {
-      
       setMessages((m) => [...m,e.data,]);
     };
 
