@@ -63,16 +63,16 @@ export default function App() {
       <br />
 
       {joined? 
-      <div>
-        <div className="h-[70vh] overflow-y-auto">
+      <div className="grid grid-rows-10">
+        <div className="row-span-9 overflow-y-auto">
           {messages.map((message) => (
             <div className="m-8 ">
               <span className="bg-white text-black rounded-xl p-4 py-2 border">{message}</span>
             </div>
           ))}
         </div>
-        <div className="w-95vw  bg-white flex">
-          <input ref={inputRef} placeholder="Type Here..." id="message" className="flex-1 p-4"></input>
+        <div className="w-95vw row-span-1 grid grid-cols-12  bg-white flex">
+          <input ref={inputRef} placeholder="Type Here..." id="message" className="flex-1 p-4 col-span-10"></input>
           <button onClick={() => {
             const message = inputRef.current?.value;
             if (wsRef.current.readyState === WebSocket.OPEN) {
@@ -85,7 +85,7 @@ export default function App() {
                 })
               );
             }else {alert("Connection not made yet")}
-          }} className="bg-purple-600 text-white p-4">
+          }} className="bg-purple-600 text-white p-4 col-span-2">
             Send message
           </button>
         </div>
