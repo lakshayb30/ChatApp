@@ -4,34 +4,57 @@ import "./App.css";
 export default function App() {
   const [messages, setMessages] = useState<string>([]);
   const [joined, setJoined] = useState(false);
-  const [roomID, setRoomID] = useState<string | null>();
-  const wsRef = useRef<WebSocket | null>();
+  const [roomID, setRoomID] = useState<string | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    
-
+  const connectWebSocket = () => {
+    if (wsRef.current) {return}
     const ws = new WebSocket("ws://localhost:8080");
+    ws.onopen = () => {
+      console.log("WebSocket connection established");
+      wsRef.current = ws;
+    }
 
     ws.onmessage = (e) => {
-      setMessages((m) => [...m,e.data,]);
+      try{
+        const data = JSON.parse(e.data)
+        if (data.type === "chat"){
+          setMessages((m) => [...m,data.payload.message]);
+        } else if (data.type === "join_success"){
+          setJoined(true);
+          setRoomID(data.payload.roomID);
+        }
+      } catch(error){
+        console.log("non JSON msg received" , e.data)
+        setMessages((m) => [...m,e.data]);
+      }
+      
     };
 
-    wsRef.current = ws;
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+      wsRef.current = null;
+      setTimeout(connectWebSocket, 1000);
+    };
+  }
 
-
-
+  useEffect(() => {
+    connectWebSocket();
     return () => {
-      ws.close();
+      if (wsRef.current) {
+        wsRef.current.close();
+        wsRef.current = null;
+      }
     };
   }, []);
 
   return (
     <div className="h-screen bg-gradient-to-br from-blue-400 to-purple-800">
       <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingTop:50,fontSize:30}}>
-        {joined? <span className="font-bold">ROOM NO - {roomID}</span>:<span className="font-bold">NOT CONNECTED</span>}
+        {joined? <div className=" bg-sky-400 w-100vw px-10 -mt-1 rounded-2xl  "><span className="font-bold">ROOM NO - {roomID}</span></div>:<span className="font-bold">Welcome to TalkSpace !</span>}
         
       </div>
       
@@ -41,14 +64,14 @@ export default function App() {
 
       {joined? 
       <div>
-        <div className="h-[80vh] overflow-y-auto">
+        <div className="h-[70vh] overflow-y-auto">
           {messages.map((message) => (
             <div className="m-8 ">
               <span className="bg-white text-black rounded-xl p-4 py-2 border">{message}</span>
             </div>
           ))}
         </div>
-        <div className="w-95vw mx-4 bg-white flex">
+        <div className="w-95vw  bg-white flex">
           <input ref={inputRef} placeholder="Type Here..." id="message" className="flex-1 p-4"></input>
           <button onClick={() => {
             const message = inputRef.current?.value;
@@ -68,10 +91,10 @@ export default function App() {
         </div>
       </div> : 
 
-      <div className="text-white flex flex-col w-[50%]" style={{margin:"auto"}}>
-        <input placeholder="name" ref={nameRef} className="text-black"></input>
-        <input placeholder="roomID" ref={idRef} className="text-black"></input>
-        <button className="bg-purple-600" onClick={() => {
+      <div className="text-white flex flex-col w-[50%] m-auto">
+        <input placeholder="Name" ref={nameRef} className="text-black mb-4 h-10 pl-7 rounded-2xl" ></input>
+        <input placeholder="RoomID" ref={idRef} className="text-black h-10 pl-7 mb-4 rounded-2xl" ></input>
+        <button className="bg-black hover:bg-white hover:text-black h-10 text-sky-400 font-semibold rounded-2xl transition-all duration-300"  onClick={() => {
           const name = nameRef.current?.value
           const roomID = idRef.current?.value
           if (wsRef.current.readyState === WebSocket.OPEN) {
@@ -88,7 +111,7 @@ export default function App() {
             setRoomID(roomID)
           } else {alert("Connection not made yet")}
         }}>
-          Enter
+          ENTER
         </button>
       </div>}     
     </div>

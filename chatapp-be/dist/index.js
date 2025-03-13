@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = require("ws");
-const porta = process.env.PORT || 8080;
-const wss = new ws_1.WebSocketServer({ port: porta });
+const PORT = Number(process.env.PORT) || 8080;
+const wss = new ws_1.WebSocketServer({ port: PORT, host: "0.0.0.0" });
 let allSockets = [];
 wss.on("connection", (socket) => {
     socket.on("message", (message) => {
