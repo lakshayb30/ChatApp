@@ -1,45 +1,79 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
+interface Message {
+  text: string;
+  sender: string;
+  timestamp: string;
+}
+
 export default function App() {
-  const [messages, setMessages] = useState<string>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [joined, setJoined] = useState(false);
   const [roomID, setRoomID] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const [isConnecting, setIsConnecting] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const connectWebSocket = () => {
-    if (wsRef.current) {return}
+    if (wsRef.current) return;
+    setIsConnecting(true);
     const ws = new WebSocket("ws://localhost:8080");
+    
     ws.onopen = () => {
       console.log("WebSocket connection established");
       wsRef.current = ws;
-    }
+      setIsConnecting(false);
+    };
 
     ws.onmessage = (e) => {
-      try{
-        const data = JSON.parse(e.data)
-        if (data.type === "chat"){
-          setMessages((m) => [...m,data.payload.message]);
-        } else if (data.type === "join_success"){
+      try {
+        const data = JSON.parse(e.data);
+        if (data.type === "chat") {
+          setMessages((m) => [...m, {
+            text: data.payload.message,
+            sender: data.payload.sender || "Anonymous",
+            timestamp: new Date().toLocaleTimeString()
+          }]);
+        } else if (data.type === "join_success") {
           setJoined(true);
           setRoomID(data.payload.roomID);
+        } else if (data.type === "user_joined" || data.type === "user_left") {
+          setMessages((m) => [...m, {
+            text: data.payload.message,
+            sender: "System",
+            timestamp: new Date().toLocaleTimeString()
+          }]);
         }
-      } catch(error){
-        console.log("non JSON msg received" , e.data)
-        setMessages((m) => [...m,e.data]);
+      } catch (error) {
+        console.log("non JSON msg received", e.data);
+        setMessages((m) => [...m, {
+          text: e.data,
+          sender: "System",
+          timestamp: new Date().toLocaleTimeString()
+        }]);
       }
-      
     };
 
     ws.onclose = () => {
       console.log("WebSocket connection closed");
       wsRef.current = null;
+      setIsConnecting(true);
       setTimeout(connectWebSocket, 1000);
     };
-  }
+  };
 
   useEffect(() => {
     connectWebSocket();
@@ -51,69 +85,142 @@ export default function App() {
     };
   }, []);
 
+  const handleSendMessage = () => {
+    const message = inputRef.current?.value;
+    if (!message?.trim()) return;
+    
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(
+        JSON.stringify({
+          type: "chat",
+          payload: {
+            message: message,
+            sender: userName
+          },
+        })
+      );
+      if (inputRef.current) inputRef.current.value = "";
+    } else {
+      alert("Connection not established yet");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
+  const handleJoin = () => {
+    const name = nameRef.current?.value;
+    const roomID = idRef.current?.value;
+    
+    if (!name?.trim() || !roomID?.trim()) {
+      alert("Please enter both name and room ID");
+      return;
+    }
+
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      setUserName(name);
+      wsRef.current.send(
+        JSON.stringify({
+          type: "join",
+          payload: {
+            name: name,
+            roomID: roomID,
+          },
+        })
+      );
+      setJoined(true);
+      setRoomID(roomID);
+    } else {
+      alert("Connection not established yet");
+    }
+  };
+
+  const isOwnMessage = (sender: string) => sender === userName;
+
   return (
-    <div className="h-screen bg-gradient-to-br from-blue-400 to-purple-800">
-      <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingTop:50,fontSize:30}}>
-        {joined? <div className=" bg-sky-400 w-100vw px-10 -mt-1 rounded-2xl  "><span className="font-bold">ROOM NO - {roomID}</span></div>:<span className="font-bold">Welcome to TalkSpace !</span>}
-        
-      </div>
-      
-      <br />
-      <br />
-      <br />
-
-      {joined? 
-      <div className="grid grid-rows-10">
-        <div className="row-span-9 overflow-y-auto">
-          {messages.map((message) => (
-            <div className="m-8 ">
-              <span className="bg-white text-black rounded-xl p-4 py-2 border">{message}</span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 to-purple-800 p-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          {joined ? (
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+              <span className="text-2xl font-bold text-white">
+                Room: {roomID}
+              </span>
             </div>
-          ))}
+          ) : (
+            <h1 className="text-4xl font-bold text-white mb-2">
+              Welcome to TalkSpace
+            </h1>
+          )}
         </div>
-        <div className="w-95vw row-span-1 grid grid-cols-12  bg-white flex">
-          <input ref={inputRef} placeholder="Type Here..." id="message" className="flex-1 p-4 col-span-10"></input>
-          <button onClick={() => {
-            const message = inputRef.current?.value;
-            if (wsRef.current.readyState === WebSocket.OPEN) {
-              wsRef.current.send(
-                JSON.stringify({
-                  type: "chat",
-                  payload: {
-                    message: message,
-                  },
-                })
-              );
-            }else {alert("Connection not made yet")}
-          }} className="bg-purple-600 text-white p-4 col-span-2">
-            Send message
-          </button>
-        </div>
-      </div> : 
 
-      <div className="text-white flex flex-col w-[50%] m-auto">
-        <input placeholder="Name" ref={nameRef} className="text-black mb-4 h-10 pl-7 rounded-2xl" ></input>
-        <input placeholder="RoomID" ref={idRef} className="text-black h-10 pl-7 mb-4 rounded-2xl" ></input>
-        <button className="bg-black hover:bg-white hover:text-black h-10 text-sky-400 font-semibold rounded-2xl transition-all duration-300"  onClick={() => {
-          const name = nameRef.current?.value
-          const roomID = idRef.current?.value
-          if (wsRef.current.readyState === WebSocket.OPEN) {
-            wsRef.current.send(
-              JSON.stringify({
-                type: "join",
-                payload: {
-                  name:name,
-                  roomID: roomID,
-                },
-              })
-            );
-            setJoined(true)
-            setRoomID(roomID)
-          } else {alert("Connection not made yet")}
-        }}>
-          ENTER
-        </button>
-      </div>}     
+        {joined ? (
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
+            <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
+              {messages.map((message, index) => (
+                <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`text-sm font-medium ${message.sender === 'System' ? 'text-yellow-300' : isOwnMessage(message.sender) ? 'text-blue-300' : 'text-white/70'}`}>
+                      {message.sender}
+                    </span>
+                    <span className="text-xs text-white/50">{message.timestamp}</span>
+                  </div>
+                  <div className={`rounded-lg p-3 shadow-sm max-w-[80%] break-words ${
+                    message.sender === 'System' 
+                      ? 'bg-yellow-500/20 text-yellow-100' 
+                      : isOwnMessage(message.sender)
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white text-gray-800'
+                  }`}>
+                    {message.text}
+                  </div>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+            <div className="p-4 bg-white/20 backdrop-blur-sm">
+              <div className="flex gap-2">
+                <input
+                  ref={inputRef}
+                  placeholder="Type your message..."
+                  className="flex-1 p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  onKeyPress={handleKeyPress}
+                />
+                <button
+                  onClick={handleSendMessage}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors duration-200"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-xl max-w-md mx-auto">
+            <div className="space-y-4">
+              <input
+                placeholder="Your Name"
+                ref={nameRef}
+                className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <input
+                placeholder="Room ID"
+                ref={idRef}
+                className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <button
+                onClick={handleJoin}
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg transition-colors duration-200 font-semibold"
+              >
+                {isConnecting ? "Connecting..." : "Join Room"}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
