@@ -57,8 +57,8 @@ http://localhost:5174
 ---
 
 ### Screenshots 📸
-![image](https://github.com/user-attachments/assets/48721ee0-bb18-4460-b521-c419ffdb90b0)
-![image](https://github.com/user-attachments/assets/2e7137dd-de2a-49db-b1b8-cd5556fcc638)
+![image](https://github.com/user-attachments/assets/593c9a21-18ba-4323-8e98-b7b35ea4ed8c)
+![image](https://github.com/user-attachments/assets/5d86c149-bcf0-4233-b713-3a6881393f22)
 
 ---
 
