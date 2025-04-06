@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "start": "npx concurrently \"npm run dev --prefix chatapp-fe\" \"npm run dev --prefix chatapp-be\""
-
   },
   "repository": {
     "type": "git",
@@ -23,5 +21,11 @@
   "homepage": "https://github.com/lakshayb30/ChatApp#readme",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "ws": "^8.18.1"
   }
 }

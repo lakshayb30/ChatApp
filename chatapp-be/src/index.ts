@@ -1,5 +1,40 @@
+import { createServer } from "http";
+import { readFileSync, existsSync } from "fs";
 import { WebSocketServer, WebSocket } from "ws";
+import { extname, join } from "path";
+import { IncomingMessage, ServerResponse } from "http";
 const PORT = Number(process.env.PORT) || 8080;
+
+// Create HTTP server to serve static frontend
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+    let filePath = req.url === "/" ? "index.html" : req.url;
+    if (filePath && filePath.startsWith("/")) filePath = filePath.slice(1);
+
+    const fullPath = join(__dirname, "../chatapp-fe/build", filePath);
+
+    if (existsSync(fullPath)) {
+        const ext = extname(fullPath);
+        const contentTypeMap: { [key: string]: string } = {
+            ".html": "text/html",
+            ".js": "application/javascript",
+            ".css": "text/css",
+            ".json": "application/json",
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".svg": "image/svg+xml",
+        };
+        const contentType = contentTypeMap[ext] || "text/plain";
+
+        res.writeHead(200, { "Content-Type": contentType });
+        res.end(readFileSync(fullPath));
+    } else {
+        // Fallback to index.html for client-side routing (React)
+        const fallback = join(__dirname, "../chatapp-fe/build/index.html");
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(readFileSync(fallback));
+    }
+});
+
 const wss = new WebSocketServer({ port: PORT, host: "0.0.0.0" });
 
 interface User {
@@ -36,3 +71,8 @@ wss.on("connection",(socket) => {
     })
 
 })
+
+// Start both HTTP & WebSocket server
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
