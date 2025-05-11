@@ -18,14 +18,16 @@ export default function App() {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  
+  /* */
+  //Scroll to bottom when new msg will come
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  /* */
 
   const connectWebSocket = () => {
     if (wsRef.current) return;

@@ -7,7 +7,7 @@ const PORT = Number(process.env.PORT) || 8080;
 
 // Create HTTP server to serve static frontend
 const server = createServer((req: IncomingMessage, res: ServerResponse) => {
-    let filePath = req.url === "/" ? "index.html" : req.url;
+    let filePath: any = req.url === "/" ? "index.html" : req.url;
     if (filePath && filePath.startsWith("/")) filePath = filePath.slice(1);
 
     const fullPath = join(__dirname, "../chatapp-fe/build", filePath);
@@ -35,7 +35,7 @@ const server = createServer((req: IncomingMessage, res: ServerResponse) => {
     }
 });
 
-const wss = new WebSocketServer({ port: PORT, host: "0.0.0.0" });
+const wss = new WebSocketServer({ server  });
 
 interface User {
     socket : WebSocket;
