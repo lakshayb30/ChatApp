@@ -43,27 +43,18 @@ export default function App() {
     ws.onmessage = (e) => {
       try {
         const data = JSON.parse(e.data);
-        if (data.type === "chat") {
+        if (data.type === "message") {
           setMessages((m) => [...m, {
             text: data.payload.message,
-            sender: data.payload.sender || "Anonymous",
+            sender: data.payload.sender,
             timestamp: new Date().toLocaleTimeString()
           }]);
-        } else if (data.type === "join_success") {
-          setJoined(true);
-          setRoomID(data.payload.roomID);
-        } else if (data.type === "user_joined" || data.type === "user_left") {
-          setMessages((m) => [...m, {
-            text: data.payload.message,
-            sender: "System",
-            timestamp: new Date().toLocaleTimeString()
-          }]);
-        }
+        } 
       } catch (error) {
-        console.log("non JSON msg received", e.data);
+        console.log("non JSON msg received", error);
         setMessages((m) => [...m, {
           text: e.data,
-          sender: "System",
+          sender: "",
           timestamp: new Date().toLocaleTimeString()
         }]);
       }
@@ -91,7 +82,7 @@ export default function App() {
     const message = inputRef.current?.value;
     if (!message?.trim()) return;
     
-    if (wsRef.current?.readyState === WebSocket.OPEN) {
+    if (wsRef.current?.readyState === WebSocket.OPEN ) {
       wsRef.current.send(
         JSON.stringify({
           type: "chat",
@@ -109,8 +100,9 @@ export default function App() {
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      handleSendMessage();
-    }
+      if(joined) handleSendMessage()
+      else alert("You are not joined | Please Reconnect")
+    } 
   };
 
   const handleJoin = () => {
@@ -192,7 +184,11 @@ export default function App() {
                   onKeyPress={handleKeyPress}
                 />
                 <button
-                  onClick={handleSendMessage}
+                  onClick={() => {
+                    if(joined){
+                    handleSendMessage()
+                  } else{alert("You are not joined | Please Reconnect")}
+                }}
                   className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors duration-200"
                 >
                   Send
