@@ -34,10 +34,6 @@ cd chatapp
 
 ---
 
-### Install Dependencies ⬇️
-```sh
-npm install
-```
 
 ---
 
@@ -47,12 +43,6 @@ npm run start
 ```
 
 ---
-
-### Open the Application
-Open your browser and visit:
-```
-http://localhost:5174
-```
 
 ---
 
