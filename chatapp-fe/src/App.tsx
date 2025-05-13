@@ -97,7 +97,9 @@ export default function App() {
   const handleJoin = () => {
     const name = nameRef.current?.value;
     const roomID = idRef.current?.value;
+    console.log(typeof(roomID))
     
+
     if (!name?.trim() || !roomID?.trim()) {
       alert("Please enter both name and room ID");
       return;
@@ -128,10 +130,17 @@ export default function App() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           {joined ? (
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-              <span className="text-2xl font-bold text-white">
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg items-center flex justify-between">
+              <div className="text-2xl font-bold text-white ml-5">
                 Room: {roomID}
-              </span>
+              </div>
+              <div className="bg-red-600 p-2 rounded-lg hover:bg-red-500 duration-200 ease-in hover:scale-105 mr-5" onClick={() => {
+                setJoined(false)
+                setMessages([])
+              }}>
+                <img src="./logout.png" className="h-7 " alt="" />
+              </div>
+              
             </div>
           ) : (
             <h1 className="text-4xl font-bold text-white mb-2">
@@ -194,7 +203,8 @@ export default function App() {
                 className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <input
-                placeholder="Room ID"
+                type="number"
+                placeholder="Room Number"
                 ref={idRef}
                 className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
