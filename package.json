@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx concurrently \"npm run dev --prefix chatapp-fe\" \"npm run dev --prefix chatapp-be\""
+    "install:all": "npm install && npm install --prefix chatapp-fe && npm install --prefix chatapp-be",
+    "dev:fe": "npm run dev --prefix chatapp-fe",
+    "dev:be": "npm run dev --prefix chatapp-be",
+    "dev": "npx concurrently \"npm run dev:fe\" \"npm run dev:be\"",
+    "start": "npm run install:all && npm run dev"
+    
   },
   "repository": {
     "type": "git",
