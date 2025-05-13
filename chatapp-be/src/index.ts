@@ -65,8 +65,14 @@ wss.on("connection",(socket) => {
             for (let i = 0;i< allSockets.length;i++){
                 console.log(parsedMessage.payload)
                 console.log(typeof(parsedMessage.payload))
-                if (allSockets[i].room == currentUserRoom){
-                    allSockets[i].socket.send(parsedMessage.payload.message)
+                if (allSockets[i].room == currentUserRoom){ 
+                    allSockets[i].socket.send((
+                        JSON.stringify({
+                            msg: parsedMessage.payload.msg,
+                            sender: parsedMessage.payload.sender
+                        })
+                    ))
+                    
                 
                 }
             }

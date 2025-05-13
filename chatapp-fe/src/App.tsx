@@ -41,23 +41,12 @@ export default function App() {
     };
 
     ws.onmessage = (e) => {
-      try {
-        const data = JSON.parse(e.data);
-        if (data.type === "message") {
-          setMessages((m) => [...m, {
-            text: data.payload.message,
-            sender: data.payload.sender,
-            timestamp: new Date().toLocaleTimeString()
-          }]);
-        } 
-      } catch (error) {
-        console.log("non JSON msg received", error);
-        setMessages((m) => [...m, {
-          text: e.data,
-          sender: "",
-          timestamp: new Date().toLocaleTimeString()
-        }]);
-      }
+      const data = JSON.parse(e.data);
+      setMessages((m) => [...m, {
+        text: data.msg,
+        sender: data.sender,
+        timestamp: new Date().toLocaleTimeString()
+      }]);
     };
 
     ws.onclose = () => {
@@ -87,7 +76,7 @@ export default function App() {
         JSON.stringify({
           type: "chat",
           payload: {
-            message: message,
+            msg: message,
             sender: userName
           },
         })

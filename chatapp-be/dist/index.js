@@ -55,7 +55,10 @@ wss.on("connection", (socket) => {
                 console.log(parsedMessage.payload);
                 console.log(typeof (parsedMessage.payload));
                 if (allSockets[i].room == currentUserRoom) {
-                    allSockets[i].socket.send(parsedMessage.payload.message);
+                    allSockets[i].socket.send((JSON.stringify({
+                        msg: parsedMessage.payload.msg,
+                        sender: parsedMessage.payload.sender
+                    })));
                 }
             }
         }
