@@ -6,7 +6,7 @@ import { IncomingMessage, ServerResponse } from "http";
 const PORT = Number(process.env.PORT) || 8080;
 
 // Create HTTP server to serve static frontend
-const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+/* const server = createServer((req: IncomingMessage, res: ServerResponse) => {
     let filePath: any = req.url === "/" ? "index.html" : req.url;
     if (filePath && filePath.startsWith("/")) filePath = filePath.slice(1);
 
@@ -33,7 +33,9 @@ const server = createServer((req: IncomingMessage, res: ServerResponse) => {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(readFileSync(fallback));
     }
-});
+}); */
+const server = createServer(); // Minimal HTTP server
+
 
 const wss = new WebSocketServer({ server  });
 
