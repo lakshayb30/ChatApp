@@ -1,19 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = require("http");
-const fs_1 = require("fs");
 const ws_1 = require("ws");
-const path_1 = require("path");
+//import { extname, join } from "path";
+//import { IncomingMessage, ServerResponse } from "http";
 const PORT = Number(process.env.PORT) || 8080;
 // Create HTTP server to serve static frontend
-const server = (0, http_1.createServer)((req, res) => {
-    let filePath = req.url === "/" ? "index.html" : req.url;
-    if (filePath && filePath.startsWith("/"))
-        filePath = filePath.slice(1);
-    const fullPath = (0, path_1.join)(__dirname, "../chatapp-fe/build", filePath);
-    if ((0, fs_1.existsSync)(fullPath)) {
-        const ext = (0, path_1.extname)(fullPath);
-        const contentTypeMap = {
+/* const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+    let filePath: any = req.url === "/" ? "index.html" : req.url;
+    if (filePath && filePath.startsWith("/")) filePath = filePath.slice(1);
+
+    const fullPath = join(__dirname, "../chatapp-fe/build", filePath);
+
+    if (existsSync(fullPath)) {
+        const ext = extname(fullPath);
+        const contentTypeMap: { [key: string]: string } = {
             ".html": "text/html",
             ".js": "application/javascript",
             ".css": "text/css",
@@ -23,16 +24,17 @@ const server = (0, http_1.createServer)((req, res) => {
             ".svg": "image/svg+xml",
         };
         const contentType = contentTypeMap[ext] || "text/plain";
+
         res.writeHead(200, { "Content-Type": contentType });
-        res.end((0, fs_1.readFileSync)(fullPath));
-    }
-    else {
+        res.end(readFileSync(fullPath));
+    } else {
         // Fallback to index.html for client-side routing (React)
-        const fallback = (0, path_1.join)(__dirname, "../chatapp-fe/build/index.html");
+        const fallback = join(__dirname, "../chatapp-fe/build/index.html");
         res.writeHead(200, { "Content-Type": "text/html" });
-        res.end((0, fs_1.readFileSync)(fallback));
+        res.end(readFileSync(fallback));
     }
-});
+}); */
+const server = (0, http_1.createServer)();
 const wss = new ws_1.WebSocketServer({ server });
 let allSockets = [];
 wss.on("connection", (socket) => {
