@@ -1,8 +1,7 @@
 import { createServer } from "http";
-import { readFileSync, existsSync } from "fs";
 import { WebSocketServer, WebSocket } from "ws";
-import { extname, join } from "path";
-import { IncomingMessage, ServerResponse } from "http";
+//import { extname, join } from "path";
+//import { IncomingMessage, ServerResponse } from "http";
 const PORT = Number(process.env.PORT) || 8080;
 
 // Create HTTP server to serve static frontend
@@ -34,7 +33,7 @@ const PORT = Number(process.env.PORT) || 8080;
         res.end(readFileSync(fallback));
     }
 }); */
-const server = createServer(); // Minimal HTTP server
+const server = createServer(); 
 
 
 const wss = new WebSocketServer({ server  });
