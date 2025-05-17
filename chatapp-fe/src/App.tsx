@@ -32,7 +32,7 @@ export default function App() {
   const connectWebSocket = () => {
     if (wsRef.current) return;
     setIsConnecting(true);
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("wss://chatapp-ecai.onrender.com");
     
     ws.onopen = () => {
       console.log("WebSocket connection established");
