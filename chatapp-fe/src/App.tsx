@@ -132,9 +132,9 @@ export default function App() {
           {joined ? (
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg items-center flex justify-between">
               <div className="text-2xl font-bold text-white ml-5">
-                Room: {roomID}
+                Room  {roomID}
               </div>
-              <div className="bg-red-600 p-2 rounded-lg hover:bg-red-500 duration-200 ease-in hover:scale-105 mr-5" onClick={() => {
+              <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" onClick={() => {
                 setJoined(false)
                 setMessages([])
               }}>
@@ -143,19 +143,19 @@ export default function App() {
               
             </div>
           ) : (
-            <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome to TalkSpace
-            </h1>
+            
+            null
           )}
         </div>
 
         {joined ? (
           <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
             <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
+             
               {messages.map((message, index) => (
                 <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-sm font-medium ${message.sender === 'System' ? 'text-yellow-300' : isOwnMessage(message.sender) ? 'text-blue-300' : 'text-white/70'}`}>
+                    <span className={`text-sm font-medium ${message.sender === 'System' ? 'text-yellow-300' : isOwnMessage(message.sender) ? 'text-blue-100' : 'text-white/70'}`}>
                       {message.sender}
                     </span>
                     <span className="text-xs text-white/50">{message.timestamp}</span>
@@ -195,22 +195,31 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-xl max-w-md mx-auto">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl max-w-md ml-auto mr-auto mt-[15%]">
+            <div className="flex justify-between">
+              <h1 className="text-3xl font-semibold text-white  ">Welcome to TalkSpace</h1>
+              
+            </div>
+            <div className="mb-10  text-gray-300">
+              Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
+
+
+            </div>
             <div className="space-y-4">
               <input
-                placeholder="Your Name"
+                placeholder="UserName"
                 ref={nameRef}
-                className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 rounded-lg  focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <input
                 type="number"
-                placeholder="Room Number"
+                placeholder="Room No."
                 ref={idRef}
                 className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <button
                 onClick={handleJoin}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg transition-colors duration-200 font-semibold"
+                className="w-full bg-purple-500 hover:bg-purple-600 hover:text-gray-300  text-white py-3 rounded-lg transition-colors duration-200 font-semibold"
               >
                 {isConnecting ? "Connecting..." : "Join Room"}
               </button>
