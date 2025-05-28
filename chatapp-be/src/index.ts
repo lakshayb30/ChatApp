@@ -16,7 +16,6 @@ let allSockets: User[] = []
 var CurrentRooms:number[] = [];
 
 wss.on("connection",(socket) => {
-    console.log(socket)
     
     socket.on("close" , () => {
         for(let i=0;i<allSockets.length;i++){
@@ -45,11 +44,9 @@ wss.on("connection",(socket) => {
                 for(let i = 0;i<CurrentRooms.length;i++){
                     if(CurrentRooms[i] == rm){
                         flag = 1;
-                        console.log("room already exists")
                     }  
                 }
                 if (flag == 0){
-                        console.log("Room Not Found")
                         CurrentRooms.push(rm)
                 }
             } 
@@ -63,7 +60,6 @@ wss.on("connection",(socket) => {
 
         if (parsedMessage.type == "chat"){
             let currentUserRoom = null
-            console.log(CurrentRooms)
             for (let i = 0;i<allSockets.length;i++){
                 if (allSockets[i].socket instanceof socket.constructor) {
                     currentUserRoom = allSockets[i].room
