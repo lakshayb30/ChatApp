@@ -16,7 +16,6 @@ let allSockets: User[] = []
 var CurrentRooms:number[] = [];
 
 wss.on("connection",(socket) => {
-    
     socket.on("close" , () => {
         for(let i=0;i<allSockets.length;i++){
             if(allSockets[i].socket == socket){
