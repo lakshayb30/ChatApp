@@ -19,7 +19,6 @@ export default function App() {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [currentrooms,setCurrentRooms] = useState();
   
   /* */
   //Scroll to bottom when new msg will come
@@ -49,7 +48,7 @@ export default function App() {
 
       }
       else{
-        setCurrentRooms(data.Currentrooms)
+        
       setMessages((m) => [...m, {
         text: data.msg,
         sender: data.sender,
