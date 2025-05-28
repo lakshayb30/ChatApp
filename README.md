@@ -47,8 +47,10 @@ npm run start
 ---
 
 ### Screenshots 📸
-![image](https://github.com/user-attachments/assets/593c9a21-18ba-4323-8e98-b7b35ea4ed8c)
-![image](https://github.com/user-attachments/assets/5d86c149-bcf0-4233-b713-3a6881393f22)
+![image](https://github.com/user-attachments/assets/bcff6565-6edd-4696-b504-0295ff6fd813)
+![image](https://github.com/user-attachments/assets/75d1c7d1-abc5-42d3-aa52-9cb1a05f3011)
+
+
 
 ---
 
