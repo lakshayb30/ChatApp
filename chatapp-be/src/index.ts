@@ -16,6 +16,16 @@ let allSockets: User[] = []
 var CurrentRooms:number[] = [];
 
 wss.on("connection",(socket) => {
+
+    setInterval(() => {
+        socket.send(JSON.stringify({
+        type:"roomdata",
+        rcount:CurrentRooms.length
+    }))
+    }, 1000);
+    
+    
+
     socket.on("close" , () => {
         for(let i=0;i<allSockets.length;i++){
             if(allSockets[i].socket == socket){
@@ -49,6 +59,8 @@ wss.on("connection",(socket) => {
                         CurrentRooms.push(rm)
                 }
             } 
+
+           
             
             allSockets.push({
                 socket,

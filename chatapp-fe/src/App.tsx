@@ -8,6 +8,7 @@ interface Message {
 }
 
 export default function App() {
+  const [roomscount,setRoomcount] = useState(0);
   const [messages, setMessages] = useState<Message[]>([]);
   const [joined, setJoined] = useState(false);
   const [roomID, setRoomID] = useState<string | null>(null);
@@ -43,13 +44,19 @@ export default function App() {
 
     ws.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      console.log(data)
-      setCurrentRooms(data.Currentrooms)
+      if(data.type == "roomdata"){
+        setRoomcount(data.rcount)
+
+      }
+      else{
+        setCurrentRooms(data.Currentrooms)
       setMessages((m) => [...m, {
         text: data.msg,
         sender: data.sender,
         timestamp: new Date().toLocaleTimeString()
       }]);
+      }
+      
     };
 
     ws.onclose = () => {
@@ -73,7 +80,6 @@ export default function App() {
   const handleSendMessage = () => {
     const message = inputRef.current?.value;
     if (!message?.trim()) return;
-    console.log(currentrooms);
     
     if (wsRef.current?.readyState === WebSocket.OPEN ) {
       wsRef.current.send(
@@ -128,14 +134,28 @@ export default function App() {
   };
 
   const isOwnMessage = (sender: string) => sender === userName;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 to-purple-800 p-4">
+      <div className={`${joined ? 'hidden' : 'flex'}`}>
+        <div className="scale-110 ml-10 mt-5 mb-[-20px] bg-gray-300 w-[150px] p-1 px-2 items-center flex justify-center rounded-lg border-2 border-green-500 shadow-lg hover:bg-green-100 duration-300 ease-in hover:shadow-2xl hover:border-green-100">
+          {roomscount} Active Rooms
+        </div>
+      </div>
+      
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           {joined ? (
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg items-center flex justify-between">
-              <div className="text-2xl font-bold text-white ml-5">Room  {roomID}</div>
+              <div className="text-2xl font-bold text-white ">
+                <div>
+                  Room  {roomID}
+                </div>
+                <div className="font-light text-[20px] text-black ml-11">
+                  {roomscount} Active Rooms
+                </div>
+                
+              </div>
+
               <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" 
               onClick={() => {
                 setJoined(false)
