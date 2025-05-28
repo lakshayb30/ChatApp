@@ -18,6 +18,7 @@ export default function App() {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [currentrooms,setCurrentRooms] = useState();
   
   /* */
   //Scroll to bottom when new msg will come
@@ -42,6 +43,8 @@ export default function App() {
 
     ws.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      console.log(data)
+      setCurrentRooms(data.Currentrooms)
       setMessages((m) => [...m, {
         text: data.msg,
         sender: data.sender,
@@ -70,6 +73,7 @@ export default function App() {
   const handleSendMessage = () => {
     const message = inputRef.current?.value;
     if (!message?.trim()) return;
+    console.log(currentrooms);
     
     if (wsRef.current?.readyState === WebSocket.OPEN ) {
       wsRef.current.send(
@@ -131,27 +135,18 @@ export default function App() {
         <div className="text-center mb-8">
           {joined ? (
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg items-center flex justify-between">
-              <div className="text-2xl font-bold text-white ml-5">
-                Room  {roomID}
-              </div>
-              <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" onClick={() => {
+              <div className="text-2xl font-bold text-white ml-5">Room  {roomID}</div>
+              <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" 
+              onClick={() => {
                 setJoined(false)
                 setMessages([])
-              }}>
-                <img src="./logout.png" className="h-7 " alt="" />
-              </div>
-              
-            </div>
-          ) : (
-            
-            null
-          )}
+              }}><img src="./logout.png" className="h-7 " alt="" /></div>
+            </div>) : (null)}
         </div>
 
         {joined ? (
           <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
             <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
-             
               {messages.map((message, index) => (
                 <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
                   <div className="flex items-center gap-2 mb-1">
@@ -160,13 +155,7 @@ export default function App() {
                     </span>
                     <span className="text-xs text-white/50">{message.timestamp}</span>
                   </div>
-                  <div className={`rounded-lg p-3 shadow-sm max-w-[80%] break-words ${
-                    message.sender === 'System' 
-                      ? 'bg-yellow-500/20 text-yellow-100' 
-                      : isOwnMessage(message.sender)
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-white text-gray-800'
-                  }`}>
+                  <div className={`rounded-lg p-3 shadow-sm max-w-[80%] break-words ${message.sender === 'System' ? 'bg-yellow-500/20 text-yellow-100' : isOwnMessage(message.sender)? 'bg-blue-500 text-white': 'bg-white text-gray-800'}`}>
                     {message.text}
                   </div>
                 </div>
@@ -202,8 +191,6 @@ export default function App() {
             </div>
             <div className="mb-10  text-gray-300">
               Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
-
-
             </div>
             <div className="space-y-4">
               <input
