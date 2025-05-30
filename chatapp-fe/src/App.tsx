@@ -30,6 +30,15 @@ export default function App() {
   }, [messages]);
   /* */
 
+  const LeaveHandler = () => {
+    if(wsRef.current?.readyState === WebSocket.OPEN){
+      setJoined(false)
+      setMessages([])
+      wsRef.current?.close();
+    }
+    
+  }
+
   const connectWebSocket = () => {
     if (wsRef.current) return;
     setIsConnecting(true);
@@ -156,10 +165,7 @@ export default function App() {
               </div>
 
               <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" 
-              onClick={() => {
-                setJoined(false)
-                setMessages([])
-              }}><img src="./logout.png" className="h-7 " alt="" /></div>
+              onClick={LeaveHandler}><img src="./logout.png" className="h-7 " alt="" /></div>
             </div>) : (null)}
         </div>
 
