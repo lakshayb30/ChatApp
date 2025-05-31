@@ -1,3 +1,4 @@
+import { rm } from "fs";
 import { createServer } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 const PORT = Number(process.env.PORT) || 8080;
@@ -27,18 +28,33 @@ wss.on("connection",(socket) => {
     
 
     socket.on("close" , () => {
-        for(let i=0;i<allSockets.length;i++){
-            if(allSockets[i].socket == socket){
-                const rm = allSockets[i].room; 
-                for(let i=CurrentRooms.length ; i>=0;i--){
-                    if(CurrentRooms[i] == rm){
-                        CurrentRooms.splice(i,1)
-                    }
-                }
-            }
+        
+        let remroom:number | undefined;
+        console.log("1 connection closed")
 
+        for(let i=0;i<allSockets.length;i++){
+            
+            if(allSockets[i].socket === socket){
+                remroom = allSockets[i].room
+                console.log("removed socket from :",remroom)
+                allSockets.splice(i,1)
+                break
+            }
         }
-        console.log(CurrentRooms)
+        if(remroom !== undefined){
+            const stillexist = allSockets.some(e => e.room === remroom)
+            if(!stillexist){
+                const roomIndex = CurrentRooms.indexOf(remroom);
+                if(remroom !== -1){
+                    console.log("rem room :",remroom);
+                    CurrentRooms.splice(roomIndex,1)
+                }else{
+                    console.log("room not found:",remroom);
+                }
+            } else{
+                console.log("room stil have sockets")
+            }
+        }
         
     })
 
