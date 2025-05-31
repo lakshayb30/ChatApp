@@ -21,34 +21,29 @@ A real-time, room-based chat application built using WebSockets. Users can creat
 
 ### Clone the Repository 💼
 ```sh
-git clone https://github.com/lakshayb30/chatapp.git
+git clone https://github.com/lkshayb/chatapp.git
 
 ```
-
----
-
 ### Navigate to the Project Directory 🧭
 ```sh
 cd chatapp
 ```
+### Change Backend URL Accordingly
+![image](https://github.com/user-attachments/assets/a26fa219-829c-46df-9aea-7fb027315816)
 
----
-
-
----
 
 ### Start the Server
 ```sh
-npm run start
+npm run start // if running backend locally
+```
+```sh
+npm run dev:fe // if running backend locally
 ```
 
----
-
----
-
 ### Screenshots 📸
-![image](https://github.com/user-attachments/assets/bcff6565-6edd-4696-b504-0295ff6fd813)
-![image](https://github.com/user-attachments/assets/75d1c7d1-abc5-42d3-aa52-9cb1a05f3011)
+![image](https://github.com/user-attachments/assets/6275e039-c043-4f25-90a5-7ca120226279)
+![image](https://github.com/user-attachments/assets/887170b3-e4c1-474d-b657-7ab8bb6afd7d)
+
 
 
 
@@ -56,6 +51,6 @@ npm run start
 
 ## Usage
 1. Open the application in a web browser.
-2. Enter a username and choose a chat room.
+2. Enter a username and enter room no.
 3. Start sending and receiving messages in real time.
 
