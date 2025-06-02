@@ -9,6 +9,7 @@ interface Message {
 
 export default function App() {
   const [roomscount,setRoomcount] = useState(0);
+  const [pplcount,setpplcount] = useState(0)
   const [messages, setMessages] = useState<Message[]>([]);
   const [joined, setJoined] = useState(false);
   const [roomID, setRoomID] = useState<string | null>(null);
@@ -42,8 +43,8 @@ export default function App() {
   const connectWebSocket = () => {
     if (wsRef.current) return;
     setIsConnecting(true);
-    const ws = new WebSocket("wss://chatapp-ecai.onrender.com");
-    // const ws = new WebSocket("ws://localhost:8080");
+    //const ws = new WebSocket("wss://chatapp-ecai.onrender.com");
+    const ws = new WebSocket("ws://localhost:8080");
     
     ws.onopen = () => {
       console.log("WebSocket connection established");
@@ -55,7 +56,9 @@ export default function App() {
       const data = JSON.parse(e.data);
       if(data.type == "roomdata"){
         setRoomcount(data.rcount)
-
+      }
+      else if(data.type == "pplcount"){
+        setpplcount(data.count)
       }
       else{
         
@@ -158,6 +161,7 @@ export default function App() {
               <div className="text-2xl font-bold text-white ">
                 <div>
                   Room  {roomID}
+                  //// {pplcount} ///
                 </div>
                 <div className="font-light text-[20px] text-black ml-11">
                   {roomscount} Active Rooms

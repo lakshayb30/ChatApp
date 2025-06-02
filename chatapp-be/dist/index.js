@@ -57,6 +57,18 @@ wss.on("connection", (socket) => {
                     CurrentRooms.push(rm);
                 }
             }
+            setInterval(() => {
+                let rmcount = 0;
+                for (let i = 0; i < allSockets.length; i++) {
+                    if (allSockets[i].room == parsedMessage.payload.roomID) {
+                        rmcount++;
+                        allSockets[i].socket.send((JSON.stringify({
+                            type: "pplcount",
+                            count: rmcount
+                        })));
+                    }
+                }
+            }, 1000);
             allSockets.push({
                 socket,
                 room: parsedMessage.payload.roomID
