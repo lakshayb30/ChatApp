@@ -1,3 +1,4 @@
+import { count } from "console";
 import { rm } from "fs";
 import { createServer } from "http";
 import { WebSocketServer, WebSocket } from "ws";
@@ -64,6 +65,7 @@ wss.on("connection",(socket) => {
 
         if (parsedMessage.type == "join"){
             const rm:number = Number(parsedMessage.payload.roomID);
+            
             if(CurrentRooms){
                 let flag = 0;
                 for(let i = 0;i<CurrentRooms.length;i++){
@@ -77,6 +79,22 @@ wss.on("connection",(socket) => {
             } 
 
            
+           
+
+           setInterval(() => {
+                let rmcount = 0;
+                for(let i=0;i<allSockets.length;i++){
+                    if(allSockets[i].room == parsedMessage.payload.roomID){
+                        rmcount++
+                        allSockets[i].socket.send((
+                            JSON.stringify({
+                                type:"pplcount",
+                                count:rmcount
+                            })
+                        ))
+                    }
+                }
+           }, 1000);
             
             allSockets.push({
                 socket,
