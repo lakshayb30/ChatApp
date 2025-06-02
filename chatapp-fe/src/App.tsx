@@ -158,20 +158,24 @@ export default function App() {
         <div className="text-center mb-8">
           {joined ? (
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg items-center flex justify-between">
-              <div className="text-2xl font-bold text-white ">
-                <div>
+              <div className="text-2xl font-bold text-white bg-blue-700 rounded-xl p-2">
                   Room  {roomID}
-                  //// {pplcount} ///
+              </div>
+              <div className="font-light text-[20px] text-black   ">
+                <div className="bg-green-500 w-[100%] rounded-t-lg px-3 border">
+                  {pplcount} People Active
                 </div>
-                <div className="font-light text-[20px] text-black ml-11">
-                  {roomscount} Active Rooms
+                <div className="bg-green-500 w-[100%] rounded-b-lg px-3 border">
+                  {roomscount} Active Room(s)
                 </div>
                 
               </div>
 
               <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" 
-              onClick={LeaveHandler}><img src="./logout.png" className="h-7 " alt="" /></div>
-            </div>) : (null)}
+                onClick={LeaveHandler}><img src="./logout.png" className="h-7 " alt="" />
+              </div>
+            </div>
+          ) : (null)}
         </div>
 
         {joined ? (
