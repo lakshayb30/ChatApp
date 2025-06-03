@@ -161,14 +161,24 @@ export default function App() {
               <div className="text-2xl font-bold text-white bg-blue-700 rounded-xl p-2">
                   Room  {roomID}
               </div>
-              <div className="font-light text-[20px] text-black   ">
-                <div className="bg-green-500 w-[100%] rounded-t-lg px-3 border">
-                  {pplcount} People Active
+              <div className="font-light text-sm text-white flex gap-2">
+                <div className="bg-green-500 hover:bg-white hover:text-green-500 duration-300 ease-in backdrop-blur-sm shadow-xl items-center flex justify-around gap-2 rounded-xl px-3 border-green-600 font-bold border-[1px] lg:mx-2 h-7">
+                    <div>
+                      <img src="./user.png" className="h-4 " alt="" />
+                    </div>   
+                    <div>
+                      {pplcount}
+                    </div>      
                 </div>
-                <div className="bg-green-500 w-[100%] rounded-b-lg px-3 border">
-                  {roomscount} Active Room(s)
+
+                <div className="bg-blue-500 backdrop-blur-sm hover:bg-white hover:text-blue-500 duration-300 ease-in shadow-xl items-center flex justify-around gap-2 rounded-xl px-3 border-blue-600 font-bold border-[1px] lg:mx-2 h-7">
+                    <div>
+                      <img src="./messenger.png" className="h-4 " alt="" />
+                    </div>   
+                    <div>
+                      {roomscount}
+                    </div>      
                 </div>
-                
               </div>
 
               <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" 
