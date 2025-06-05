@@ -147,7 +147,7 @@ export default function App() {
 
   const isOwnMessage = (sender: string) => sender === userName;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-purple-500 to-pink-700 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-purple-500 to-pink-700 p-4 relative z-10 ">
       
       
       <div className="max-w-4xl mx-auto">
@@ -225,14 +225,15 @@ export default function App() {
           </div>
         ) : (
           <div className="max-w-md ml-auto mr-auto mt-[13%] flex-column justify-items-center">
-            <div className="w-[50%]  rounded-t-2xl backdrop-blur-sm bg-black/50 text-white border-t py-1 items-center flex justify-center">
+            <div className=" w-[50%]  rounded-t-2xl backdrop-blur-sm bg-black/50 text-white border-t py-1 items-center flex justify-center">
               <div className="relative inline-flex">
                 <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
                 <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
               </div>
               {roomscount} Rooms Active
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl ">
+            
+            <div className="card-content rounded-[12px] p-8 shadow-2xl bg-[#9333ea] opacity-0.1 ">
               <div className="flex justify-between">
                 <h1 className="text-3xl font-extrabold text-white  ">Welcome to TalkSpace</h1>
                 
@@ -244,17 +245,17 @@ export default function App() {
                 <input
                   placeholder="UserName"
                   ref={nameRef}
-                  className="w-full p-3 rounded-lg bg-white/20 border backdrop-blur-xl placeholder-white focus:outline-none focus:ring-2 focus:ring-black duration-300 ease-in"
+                  className="w-full p-3 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:outline-none focus:ring-2 focus:ring-black duration-300 ease-in"
                 />
                 <input
                   type="number"
                   placeholder="Room No."
                   ref={idRef}
-                  className="w-full p-3 rounded-lg bg-white/20 border backdrop-blur-xl placeholder-white focus:ring-2 focus:ring-black duration-300 ease-in"
+                  className="w-full p-3 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:ring-2 focus:ring-black duration-300 ease-in"
                 />
                 <button
                   onClick={handleJoin}
-                  className="w-full bg-gradient-to-r from-violet-500 from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg hover:shadow-lg  border border-gray-500 hover:border-black duration-300 ease-in font-semibold text-lg"
+                  className="submit-btn w-full bg-gradient-to-r from-[#ff4ecd] from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg   duration-300 ease-in font-semibold text-lg"
                 >
                   {isConnecting ? "Connecting..." : "Join Room"}
                 </button>
