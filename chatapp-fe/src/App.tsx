@@ -225,7 +225,7 @@ export default function App() {
           </div>
         ) : (
           <div className="max-w-md ml-auto mr-auto mt-[13%] flex-column justify-items-center">
-            <div className="w-[50%] bg-white rounded-t-2xl backdrop-blur-sm bg-black/50 text-white border-t py-1 items-center flex justify-center">
+            <div className="w-[50%]  rounded-t-2xl backdrop-blur-sm bg-black/50 text-white border-t py-1 items-center flex justify-center">
               <div className="relative inline-flex">
                 <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
                 <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
