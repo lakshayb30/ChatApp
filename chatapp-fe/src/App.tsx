@@ -147,12 +147,8 @@ export default function App() {
 
   const isOwnMessage = (sender: string) => sender === userName;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 to-purple-800 p-4">
-      <div className={`${joined ? 'hidden' : 'flex'}`}>
-        <div className="scale-110 ml-10 mt-5 mb-[-20px] bg-gray-300 w-[150px] p-1 px-2 items-center flex justify-center rounded-lg border-2 border-green-500 shadow-lg hover:bg-green-100 duration-300 ease-in hover:shadow-2xl hover:border-green-100">
-          {roomscount} Active Rooms
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-purple-500 to-pink-700 p-4">
+      
       
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
@@ -211,7 +207,7 @@ export default function App() {
                 <input
                   ref={inputRef}
                   placeholder="Type your message..."
-                  className="flex-1 p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="flex-1 p-3 rounded-lg backdrop-blur-sm  focus:outline-none focus:ring-2 focus:ring-black"
                   onKeyPress={handleKeyPress}
                 />
                 <button
@@ -228,34 +224,44 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl max-w-md ml-auto mr-auto mt-[15%]">
-            <div className="flex justify-between">
-              <h1 className="text-3xl font-semibold text-white  ">Welcome to TalkSpace</h1>
-              
+          <div className="max-w-md ml-auto mr-auto mt-[13%] flex-column justify-items-center">
+            <div className="w-[50%] bg-white rounded-t-2xl backdrop-blur-sm bg-black/50 text-white border-t py-1 items-center flex justify-center">
+              <div className="relative inline-flex">
+                <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
+                <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
+              </div>
+              {roomscount} Rooms Active
             </div>
-            <div className="mb-10  text-gray-300">
-              Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
-            </div>
-            <div className="space-y-4">
-              <input
-                placeholder="UserName"
-                ref={nameRef}
-                className="w-full p-3 rounded-lg  focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              <input
-                type="number"
-                placeholder="Room No."
-                ref={idRef}
-                className="w-full p-3 rounded-lg bg-white/90 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              <button
-                onClick={handleJoin}
-                className="w-full bg-purple-500 hover:bg-purple-600 hover:text-gray-300  text-white py-3 rounded-lg transition-colors duration-200 font-semibold"
-              >
-                {isConnecting ? "Connecting..." : "Join Room"}
-              </button>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl ">
+              <div className="flex justify-between">
+                <h1 className="text-3xl font-semibold text-white  ">Welcome to TalkSpace</h1>
+                
+              </div>
+              <div className="mb-10  text-gray-300">
+                Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
+              </div>
+              <div className="space-y-4 text-white">
+                <input
+                  placeholder="UserName"
+                  ref={nameRef}
+                  className="w-full p-3 rounded-lg bg-white/20 border backdrop-blur-xl placeholder-white focus:outline-none focus:ring-2 focus:ring-black duration-300 ease-in"
+                />
+                <input
+                  type="number"
+                  placeholder="Room No."
+                  ref={idRef}
+                  className="w-full p-3 rounded-lg bg-white/20 border backdrop-blur-xl placeholder-white focus:ring-2 focus:ring-black duration-300 ease-in"
+                />
+                <button
+                  onClick={handleJoin}
+                  className="w-full bg-gradient-to-r from-violet-500 from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg hover:shadow-lg  border border-gray-500 hover:border-black duration-300 ease-in font-semibold text-lg"
+                >
+                  {isConnecting ? "Connecting..." : "Join Room"}
+                </button>
+              </div>
             </div>
           </div>
+          
         )}
       </div>
     </div>
