@@ -234,10 +234,10 @@ export default function App() {
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl ">
               <div className="flex justify-between">
-                <h1 className="text-3xl font-semibold text-white  ">Welcome to TalkSpace</h1>
+                <h1 className="text-3xl font-extrabold text-white  ">Welcome to TalkSpace</h1>
                 
               </div>
-              <div className="mb-10  text-gray-300">
+              <div className="mb-5 text-gray-300 text-md">
                 Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
               </div>
               <div className="space-y-4 text-white">
