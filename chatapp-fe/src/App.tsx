@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import { ClipLoader, PacmanLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 interface Message {
   text: string;
