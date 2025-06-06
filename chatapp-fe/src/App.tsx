@@ -239,7 +239,6 @@ export default function App() {
             <div className="card-content rounded-[12px] p-8 shadow-2xl bg-[#9333ea] opacity-0.1 ">
               <div className="flex justify-between">
                 <h1 className="text-3xl font-extrabold text-white  ">Welcome to TalkSpace</h1>
-                
               </div>
               <div className="mb-5 text-gray-300 text-md">
                 Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
