@@ -225,6 +225,7 @@ export default function App() {
               
             </div>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <div className="mb-10  text-gray-300">
               Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
             </div>
@@ -247,6 +248,8 @@ export default function App() {
                 {isConnecting ? "Connecting..." : "Join Room"}
               </button>
 =======
+=======
+>>>>>>> Stashed changes
 
             
             
