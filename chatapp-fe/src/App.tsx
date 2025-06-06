@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import { ClipLoader, PacmanLoader } from "react-spinners";
 
 interface Message {
   text: string;
@@ -223,6 +224,7 @@ export default function App() {
               <h1 className="text-3xl font-semibold text-white  ">Welcome to TalkSpace</h1>
               
             </div>
+<<<<<<< Updated upstream
             <div className="mb-10  text-gray-300">
               Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
             </div>
@@ -244,6 +246,39 @@ export default function App() {
               >
                 {isConnecting ? "Connecting..." : "Join Room"}
               </button>
+=======
+
+            
+            
+            <div className="card-content rounded-[12px] p-8 shadow-2xl bg-[#9333ea] opacity-0.1 ">
+              <div className="flex justify-between">
+                <h1 className="text-3xl font-extrabold text-white  ">Welcome to TalkSpace</h1>
+                
+              </div>
+              <div className="mb-5 text-gray-300 text-md">
+                Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
+              </div>
+              <div className="space-y-4 text-white">
+                <input
+                  placeholder="UserName"
+                  ref={nameRef}
+                  className="w-full p-3 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:outline-none focus:ring-2 focus:ring-black duration-300 ease-in"
+                />
+                <input
+                  type="number"
+                  placeholder="Room No."
+                  ref={idRef}
+                  className="w-full p-3 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:ring-2 focus:ring-black duration-300 ease-in"
+                />
+                <button
+                  onClick={handleJoin}
+                  disabled={isConnecting}
+                  className={`${isConnecting ? "cursor-not-allowed" : "cursor-pointer"} submit-btn w-full bg-gradient-to-r from-[#ff4ecd] from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg   duration-300 ease-in font-semibold text-lg`}
+                >
+                  {isConnecting ? <ClipLoader color="white" size={20} /> : "Join Room"}
+                </button>
+              </div>
+>>>>>>> Stashed changes
             </div>
           </div>
         )}
