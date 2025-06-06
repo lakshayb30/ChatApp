@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import { ClipLoader, PacmanLoader } from "react-spinners";
 
 interface Message {
   text: string;
@@ -232,6 +233,8 @@ export default function App() {
               </div>
               {roomscount} Rooms Active
             </div>
+
+            
             
             <div className="card-content rounded-[12px] p-8 shadow-2xl bg-[#9333ea] opacity-0.1 ">
               <div className="flex justify-between">
@@ -255,9 +258,10 @@ export default function App() {
                 />
                 <button
                   onClick={handleJoin}
-                  className="submit-btn w-full bg-gradient-to-r from-[#ff4ecd] from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg   duration-300 ease-in font-semibold text-lg"
+                  disabled={isConnecting}
+                  className={`${isConnecting ? "cursor-not-allowed" : "cursor-pointer"} submit-btn w-full bg-gradient-to-r from-[#ff4ecd] from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg   duration-300 ease-in font-semibold text-lg`}
                 >
-                  {isConnecting ? "Connecting..." : "Join Room"}
+                  {isConnecting ? <ClipLoader color="white" size={20} /> : "Join Room"}
                 </button>
               </div>
             </div>
