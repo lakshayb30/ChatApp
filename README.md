@@ -41,8 +41,8 @@ npm run dev:fe // if running backend locally
 ```
 
 ### Screenshots 📸
-![image](https://github.com/user-attachments/assets/6275e039-c043-4f25-90a5-7ca120226279)
-![image](https://github.com/user-attachments/assets/887170b3-e4c1-474d-b657-7ab8bb6afd7d)
+![image](https://github.com/user-attachments/assets/41f72e0a-6f72-4c75-a57a-7e050cbc9b30)
+![image](https://github.com/user-attachments/assets/697991a5-bd0c-439e-8792-8a9bb1e4a9b6)
 
 
 
