@@ -10,7 +10,6 @@
     "dev:be": "npm run dev --prefix chatapp-be",
     "dev": "npx concurrently \"npm run dev:fe\" \"npm run dev:be\"",
     "start": "npm run install:all && npm run dev"
-    
   },
   "repository": {
     "type": "git",
@@ -30,6 +29,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
+    "lucide-react": "^0.525.0",
     "path": "^0.12.7",
     "ws": "^8.18.1"
   }
