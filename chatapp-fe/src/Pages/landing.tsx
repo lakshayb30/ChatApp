@@ -1,5 +1,5 @@
 import {  Github, SquareArrowOutUpRight, Menu, X, Zap } from "lucide-react"
-import { Children, useState } from "react"
+import { useState } from "react"
 
 export default function Landing(){
     function Header(){
