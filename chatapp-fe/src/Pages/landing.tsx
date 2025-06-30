@@ -1,5 +1,5 @@
-import {  Github, SquareArrowOutUpRight, Menu, X } from "lucide-react"
-import { useState } from "react"
+import {  Github, SquareArrowOutUpRight, Menu, X, Zap } from "lucide-react"
+import { Children, useState } from "react"
 
 export default function Landing(){
     function Header(){
@@ -39,18 +39,18 @@ export default function Landing(){
     function Hero(){
         function Card(props:any){
             return(
-                <div className="bg-white">
-                    <div>{props.head}</div>
-                    <div>{props.base}</div>
+                <div className="py-5 px-8 mt-5 bg-black/10 border-orange-500/30 border backdrop-blur-md rounded-xl md:w-[100%] sm:w-[600px] hover:scale-105 duration-300">
+                    <div className="text-2xl font-bold text-orange-400">{props.head}</div>
+                    <div className="text-white font-thin pt-3">{props.base}</div>
                 </div>
             )
         }
         return(
-            <div className=" h-screen font-black  bg-gradient-to-br from-black via-[#121226] to-[#4d2a12]">
+            <div className=" min-h-screen font-black pt-[100px] bg-gradient-to-br from-black via-[#121226] to-[#4d2a12]">
                 <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-orange-400/20 to-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-amber-400/15 to-orange-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
                 <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-amber-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
-                <div className="px-5 relative z-10 text-center flex flex-col justify-center items-center top-[25%]">
+                <div className="px-5 relative z-10 text-center flex flex-col justify-center items-center ">
                     <div className="md:text-7xl text-5xl font-bold text-white">
                         <span className="text-white-500">
                             Real-time 
@@ -79,9 +79,63 @@ export default function Landing(){
                         </a>
                     
                     </div>
-                    <Card head="Real-time" base="WebSocket messaging"/>
+                    <div className="flex justify-center ">
+                        <div className="md:flex gap-4">
+                            <Card head="Instant Chat" base="Seamless real-time conversations"/>
+                            <Card head="Scalable Backend" base="Built with Express & WebSockets"/>
+                            <Card head="Clean Design" base="Responsive Tailwind UI"/>
+                        </div>
+                        
+                    </div>
+                    
                 </div>
                 
+            </div>
+        )
+    }
+
+    function Features(){
+        function Card(props:any){
+            return (
+                <div className="group bg-gradient-to-tl rounded-xl border-orange-700/30 border from-gray-900 to-[black] w-[400px]  text-white pt-7 pl-7 hover:border-orange-700/60 duration-300 shadow-xl hover:scale-105 hover:shadow-orange-700/20">
+                    <div className="flex justify-left">
+                        <div className="group-hover:bg-orange-900/100 group-hover:scale-[115%] duration-300 bg-orange-600/80 rounded-lg flex justify-center p-2 text-orange-300">
+                            {props.children}
+                        </div>
+                    </div>
+                    
+                    <div className="mt-6">
+                        <div>
+                            {props.upper}
+                        </div>
+                        
+                        {props.lower}
+                    </div>
+                </div>
+            )
+        }
+        return(
+            <div className="relative min-h-screen bg-gradient-to-tr from-black to-[#121226] ">
+                <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-orange-400/10 to-amber-800/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-black-500/10 to-amber-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+                <div>
+                    <div className="flex justify-center pt-[100px] ">
+                        <span className="text-5xl font-bold text-white">
+                            Powerful <span className="bg-clip-text bg-gradient-to-l from-orange-400 to-orange-600 text-transparent">Features</span>
+                        </span>
+                        
+                    </div>
+                    <span className="text-center text-white flex justify-center mt-10 md:text-xl px-5 font-thin">
+                        TalkSpace helps you connect instantly with friends, teams, or communities — no sign-up hassle, just seamless conversation in real time.
+                    </span>
+                </div>
+                <div>
+                    <Card upper="Real-time Messaging" lower="Instant message delivery powered by WebSocket technology for seamless communication.">
+                        <Zap className="text-black group-hover:text-orange-300"/>
+                    </Card>                        
+                </div>
+
+
             </div>
         )
     }
@@ -89,6 +143,7 @@ export default function Landing(){
         <div>
             <Header/>
             <Hero/>
+            <Features/>
         </div>
     )
 }
