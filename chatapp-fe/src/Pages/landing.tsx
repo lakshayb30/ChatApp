@@ -23,6 +23,14 @@ export default function Landing(){
     }
     
     function Hero(){
+        function Card(props:any){
+            return(
+                <div className="bg-white">
+                    <div>{props.head}</div>
+                    <div>{props.base}</div>
+                </div>
+            )
+        }
         return(
             <div className=" h-screen font-black  bg-gradient-to-br from-black via-[#121226] to-[#4d2a12]">
                 <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-orange-400/20 to-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -57,7 +65,9 @@ export default function Landing(){
                         </a>
                     
                     </div>
+                    <Card head="Real-time" base="WebSocket messaging"/>
                 </div>
+                
             </div>
         )
     }
