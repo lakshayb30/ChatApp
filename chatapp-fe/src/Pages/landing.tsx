@@ -10,7 +10,7 @@ export default function Landing(){
                 <div className="flex gap-10 items-center">
                     <span className="hover:text-orange-400 cursor-pointer duration-300">Features</span>
                     <span className="hover:text-orange-400 cursor-pointer duration-300">Preview</span>
-                    <a href="https://github.com/lkshayb/bidwise-ai" target="_blank">
+                    <a href="https://github.com/lkshayb/chatapp" target="_blank">
                         <span className="flex items-center gap-2 text-lg cursor-pointer hover:scale-110  duration-200 bg-gradient-to-r from-orange-700 to-orange-500 text-black font-bold py-1 px-3 rounded-lg">
                             <Github/>
                             Github
@@ -50,7 +50,7 @@ export default function Landing(){
                         Its a full-stack real-time messaging application built with React, Node.js, and WebSockets. 
                     </div>
                     <div className="mt-8 flex justify-center gap-4">
-                        <a href="https://github.com/lkshayb/bidwise-ai" target="_blank">
+                        <a href="https://github.com/lkshayb/chatapp" target="_blank">
                             <div className="flex items-center  gap-3 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/25 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-black px-6 py-3 rounded-md font-bold text-lg duration-300">
                                 <Github/>
                                 View on GitHub
