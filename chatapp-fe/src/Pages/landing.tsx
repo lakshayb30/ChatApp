@@ -5,7 +5,7 @@ export default function Landing(){
     function Header(){
         const [menu,setmenu] = useState(false)
         return (
-            <div className="relative backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/90 text-white top-0 left-0 w-full px-8 py-4 flex items-center justify-around ">
+            <div className="z-50 relative backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/90 text-white top-0 left-0 w-full px-8 py-4 flex items-center justify-around ">
                 <div className="text-orange-400 font-bold text-2xl">
                     <a href="/">TalkSpace</a>
                 </div>
@@ -23,14 +23,12 @@ export default function Landing(){
                     <Menu onClick={() => setmenu(true)} className={`h-10 ${menu ? "hidden" : "flex"} cursor-pointer`}/>
                     <X onClick={() => setmenu(false)} className={`h-10 ${menu ? "flex" : "hidden"} cursor-pointer`}/>
                 </div>
-                <div className={`${menu ? "block" : "hidden"} flex flex-col md:hidden pb-2 px-4 text-xl bg-black text-white absolute w-screen top-[101%]`}>
-                    <div className="w-screen py-3 px-8 hover:text-orange-500 cursor-pointer">Features</div>
-                    <div className="py-3 px-8 hover:text-orange-500 cursor-pointer">Preview</div>
-                    <a href="https://github.com/lkshayb/chatapp" target="_blank">
-                        <div className="flex gap-3 py-3 px-8 items-center bg-gradient-to-r from-orange-700 to-orange-500 rounded-lg text-black font-semibold">
-                            <Github className="h-5"/>
-                            Github
-                        </div>
+                <div className={`${menu ? "block" : "hidden"} transition-all duration-300 ease-in-out flex flex-col md:hidden py-2 px-4 text-xl bg-black text-white absolute left-0 right-0 top-[101%]`}>
+                    <button className="mb-2 hover:bg-gray-900 rounded-lg py-3 px-8 hover:text-orange-500 cursor-pointer text-left">Features</button>
+                    <button className="mb-2 hover:bg-gray-900 rounded-lg py-3 px-8 hover:text-orange-500 cursor-pointer text-left">Preview</button>
+                    <a href="https://github.com/lkshayb/chatapp" target="_blank" className="mb-2 hover:from-orange-500 hover:to-orange-400 hover:shadow-sm duration-200  hover:shadow-orange-300 flex gap-3 py-3 px-8 items-center bg-gradient-to-r from-orange-700 to-orange-500 rounded-lg text-black font-semibold">
+                        <Github className="h-5"/>
+                        Github
                     </a>
                     
                 </div>
