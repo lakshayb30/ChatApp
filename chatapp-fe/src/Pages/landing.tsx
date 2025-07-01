@@ -1,11 +1,9 @@
 import {  Github, SquareArrowOutUpRight, Menu, X, Zap ,MonitorSmartphone, UsersRound, MessageSquare, Settings, Lock} from "lucide-react"
-import { useRef, useState } from "react"
+import { useState , useRef} from "react"
 
 export default function Landing(){
-    interface HeaderProps {
-        fetref: React.RefObject<HTMLDivElement>;
-    }
-    function Header(props: HeaderProps){
+    const featuresRef = useRef<HTMLDivElement>(null);
+    function Header(){
         const [menu,setmenu] = useState(false)
         return (
             <div className="z-50 relative backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/90 text-white top-0 left-0 w-full px-8 py-4 flex items-center justify-around ">
@@ -13,7 +11,7 @@ export default function Landing(){
                     <a href="/">TalkSpace</a>
                 </div>
                 <div className="md:flex gap-10 items-center hidden">
-                    <span className="hover:text-orange-400 cursor-pointer duration-300">Features</span>
+                    <span onClick={() => featuresRef.current?.scrollIntoView({ behavior: "smooth" , block:"start"})} className="hover:text-orange-400 cursor-pointer duration-300">Features</span>
                     <span className="hover:text-orange-400 cursor-pointer duration-300">Preview</span>
                     <a href="https://github.com/lkshayb/chatapp" target="_blank">
                         <span className="flex items-center gap-2 text-lg cursor-pointer hover:scale-110  duration-200 bg-gradient-to-r from-orange-700 to-orange-500 text-black font-bold py-1 px-3 rounded-lg">
@@ -27,7 +25,7 @@ export default function Landing(){
                     <X onClick={() => setmenu(false)} className={`h-10 ${menu ? "flex" : "hidden"} cursor-pointer`}/>
                 </div>
                 <div className={`${menu ? "block" : "hidden"} transition-all duration-300 ease-in-out flex flex-col md:hidden py-2 px-4 text-xl bg-black text-white absolute left-0 right-0 top-[101%]`}>
-                    <button onClick={() => props.fetref.current?.scrollIntoView({ behavior: 'smooth' })}  className="mb-2 hover:bg-gray-900 rounded-lg py-3 px-8 hover:text-orange-500 cursor-pointer text-left">Features</button>
+                    <button onClick={() => featuresRef.current?.scrollIntoView({ behavior: "smooth" })} className="mb-2 hover:bg-gray-900 rounded-lg py-3 px-8 hover:text-orange-500 cursor-pointer text-left">Features</button>
                     <button className="mb-2 hover:bg-gray-900 rounded-lg py-3 px-8 hover:text-orange-500 cursor-pointer text-left">Preview</button>
                     <a href="https://github.com/lkshayb/chatapp" target="_blank" className="mb-2 hover:from-orange-500 hover:to-orange-400 hover:shadow-sm duration-200  hover:shadow-orange-300 flex gap-3 py-3 px-8 items-center bg-gradient-to-r from-orange-700 to-orange-500 rounded-lg text-black font-semibold">
                         <Github className="h-5"/>
@@ -100,10 +98,11 @@ export default function Landing(){
         )
     }
 
-    function Features(){
+    function Features({ refProp }: { refProp: React.RefObject<HTMLDivElement> }){
         function Card(props:any){
             return (
-                <div className="max-w-[400px] z-90 group bg-gradient-to-tl rounded-xl border-orange-700/30 border from-gray-900 to-[black] sm:w-auto w-[300px]  text-white pt-7 pl-7 hover:border-orange-700/60 duration-300 shadow-xl hover:scale-105 hover:shadow-orange-700/20">
+                <div  className="max-w-[400px] z-90 group bg-gradient-to-tl rounded-xl border-orange-700/30 border from-gray-900 to-[black] sm:w-auto w-[300px]  text-white pt-7 pl-7 hover:border-orange-700/60 duration-300 shadow-xl hover:scale-105 hover:shadow-orange-700/20">
+                    
                     <div className="flex justify-left">
                         <div className="group-hover:bg-orange-900/100 group-hover:scale-[115%] duration-300 bg-orange-600/80 rounded-lg flex justify-center p-2 text-orange-300">
                             {props.children}
@@ -123,7 +122,7 @@ export default function Landing(){
             )
         }
         return(
-            <div className="relative min-h-screen bg-gradient-to-tr from-black to-[#121226] pb-[100px]">
+            <div ref={refProp} className="relative min-h-screen bg-gradient-to-tr from-black to-[#121226] pb-[100px]">
                 <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-orange-400/10 to-amber-800/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-blue-900/30 to-amber-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
                 <div className="relative">
@@ -162,16 +161,11 @@ export default function Landing(){
             </div>
         )
     }
-    const fetref = useRef<HTMLDivElement>(null);
-    
     return(
         <div>
-            <Header fetref = {fetref}/>
+            <Header/>
             <Hero/>
-            <div ref={fetref}>
-                <Features/>
-            </div>
-            
+            <Features refProp={featuresRef} />
         </div>
     )
 }
