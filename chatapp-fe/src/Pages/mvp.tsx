@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
+import {Users} from "lucide-react"
 
 interface Message {
   text: string;
@@ -147,9 +148,16 @@ export default function MainApp() {
 
   const isOwnMessage = (sender: string) => sender === userName;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-purple-500 to-pink-700 p-4 relative z-10 ">
-      
-      
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-amber-900 p-4 relative z-10 ">
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-orange-400/20 to-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-amber-400/15 to-orange-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-amber-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-orange-400 rounded-full animate-bounce delay-300"></div>
+        <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-amber-400 rounded-full animate-bounce delay-700"></div>
+        <div className="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce delay-1000"></div>
+        <div className="absolute top-2/3 right-1/4 w-1 h-1 bg-amber-300 rounded-full animate-bounce delay-1500"></div>
+      </div>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           {joined ? (
@@ -225,7 +233,7 @@ export default function MainApp() {
           </div>
         ) : (
           <div className="max-w-md ml-auto mr-auto mt-[13%] flex-column justify-items-center">
-            <div className=" w-[50%]  rounded-t-2xl backdrop-blur-sm bg-black/50 text-white border-t py-1 items-center flex justify-center">
+            <div className="px-5 py-1 mb-7 rounded-2xl backdrop-blur-sm bg-orange-500/20 hover:bg-orange-500/30 duration-300  text-orange-300 border border-orange-500/40  items-center flex justify-center">
               <div className="relative inline-flex">
                 <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
                 <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
@@ -235,24 +243,24 @@ export default function MainApp() {
 
             
             
-            <div className="card-content rounded-[12px] p-8 shadow-2xl bg-[#9333ea] opacity-0.1 ">
-              <div className="flex justify-between">
-                <h1 className="text-3xl font-extrabold text-white  ">Welcome to TalkSpace</h1>
+            <div className="card-content rounded-[12px] p-8 shadow-2xl bg-gradient-to-tl from-gray-900 to-[black] border-orange-500/50 border opacity-0.1 ">
+              <div className="flex justify-center mb-4">
+                <h1 className="text-3xl font-semibold text-orange-400  ">Welcome to TalkSpace</h1>
               </div>
-              <div className="mb-5 text-gray-300 text-md">
+              <div className="mb-5 text-gray-300 text-md text-center">
                 Real-time, room-based chat application built using WebSockets. Users can create or join chat rooms and communicate in real time with others in the same room.
               </div>
               <div className="space-y-4 text-white">
                 <input
                   placeholder="UserName"
                   ref={nameRef}
-                  className="w-full p-3 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:outline-none focus:ring-2 focus:ring-black duration-300 ease-in"
+                  className="w-full p-3 py-2 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:outline-none focus:ring-2 focus:ring-black duration-300 ease-in"
                 />
                 <input
                   type="number"
                   placeholder="Room No."
                   ref={idRef}
-                  className="w-full p-3 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:ring-2 focus:ring-black duration-300 ease-in"
+                  className="w-full p-3 py-2 rounded-lg bg-white/40 border backdrop-blur-xl placeholder-white focus:ring-2 focus:ring-black duration-300 ease-in"
                 />
                 <button
                   onClick={handleJoin}

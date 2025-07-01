@@ -6,7 +6,7 @@ export default function Landing(){
     function Header(){
         const [menu,setmenu] = useState(false)
         return (
-            <div className="z-50 relative backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/90 text-white top-0 left-0 w-full px-8 py-4 flex items-center justify-around ">
+            <div className="z-50  backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/80 text-white top-0 left-0 w-full px-8 py-4 flex items-center justify-around ">
                 <div className="text-orange-400 font-bold text-2xl">
                     <a href="/">TalkSpace</a>
                 </div>
@@ -47,7 +47,7 @@ export default function Landing(){
             )
         }
         return(
-            <div className=" min-h-screen font-black pt-[100px] pb-[100px] bg-gradient-to-br from-black via-[#121226] to-[#4d2a12]">
+            <div className=" min-h-screen font-black pt-[160px] pb-[100px] bg-gradient-to-br from-black via-[#121226] to-[#4d2a12]">
                 <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-orange-400/20 to-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-amber-400/15 to-orange-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
                 <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-amber-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
@@ -101,7 +101,7 @@ export default function Landing(){
     function Features({ refProp }: { refProp: React.RefObject<HTMLDivElement> }){
         function Card(props:any){
             return (
-                <div  className="max-w-[400px] z-90 group bg-gradient-to-tl rounded-xl border-orange-700/30 border from-gray-900 to-[black] sm:w-auto w-[300px]  text-white pt-7 pl-7 hover:border-orange-700/60 duration-300 shadow-xl hover:scale-105 hover:shadow-orange-700/20">
+                <div  className="max-w-[400px] z-90 group bg-gradient-to-tl from-gray-900 to-[black] rounded-xl border-orange-700/30 border  sm:w-auto w-[300px]  text-white pt-7 pl-7 hover:border-orange-700/60 duration-300 shadow-xl hover:scale-105 hover:shadow-orange-700/20">
                     
                     <div className="flex justify-left">
                         <div className="group-hover:bg-orange-900/100 group-hover:scale-[115%] duration-300 bg-orange-600/80 rounded-lg flex justify-center p-2 text-orange-300">
@@ -127,12 +127,12 @@ export default function Landing(){
                 <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-blue-900/30 to-amber-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
                 <div className="relative">
                     <div className="flex justify-center pt-[100px] ">
-                        <span className="sm:text-5xl text-3xl font-bold text-white">
+                        <span className="sm:text-4xl text-3xl font-bold text-white">
                             Powerful <span className="bg-clip-text bg-gradient-to-l from-orange-400 to-orange-600 text-transparent">Features</span>
                         </span>
                         
                     </div>
-                    <span className="text-center text-white flex justify-center mt-10 md:text-xl px-5 font-thin">
+                    <span className="text-center text-gray-300 flex justify-center mt-5 md:text-lg px-5 font-thin">
                         TalkSpace helps you connect instantly with friends, teams, or communities — no sign-up hassle, just seamless conversation in real time.
                     </span>
                 </div>
@@ -161,11 +161,30 @@ export default function Landing(){
             </div>
         )
     }
+
+    function Preview(){
+        return(
+            <div className="min-h-screen bg-gradient-to-bl from-black via-gray-900 to-gray-700/100">
+                <div className="relative">
+                    <div className="flex justify-center pt-[100px] ">
+                        <span className="sm:text-4xl text-3xl font-bold text-white">
+                            See it in <span className="bg-clip-text bg-gradient-to-l from-orange-400 to-orange-600 text-transparent">Action</span>
+                        </span>
+                        
+                    </div>
+                    <span className="text-center text-gray-300 flex justify-center mt-5 text-xl px-5 font-thin">
+                        Experience the clean and intuitive chat interface
+                    </span>
+                </div>
+            </div>
+        )
+    }
     return(
         <div>
             <Header/>
             <Hero/>
             <Features refProp={featuresRef} />
+            <Preview/>
         </div>
     )
 }
