@@ -267,7 +267,7 @@ export default function MainApp() {
                   disabled={isConnecting}
                   className={`${isConnecting ? "cursor-not-allowed" : "cursor-pointer"} submit-btn w-full bg-gradient-to-r from-[#ff4ecd] from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg   duration-300 ease-in font-semibold text-lg`}
                 >
-                  {isConnecting ? <ClipLoader color="white" size={20} /> : "Join Room"}
+                  {isConnecting ? <ClipLoader color="white" size={20} /> : <span className="flex gap-3 justify-center"><Users/>Join Room</span>}
                 </button>
               </div>
             </div>
