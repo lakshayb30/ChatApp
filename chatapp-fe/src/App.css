@@ -4,7 +4,9 @@
 
 .submit-btn:hover{
     transform: scale(1.02);
-box-shadow: 0 0 20px rgba(255, 78, 205, 0.6);
-
+    box-shadow: 0 0 20px rgba(255, 78, 205, 0.6);
 }
 
+.card-content{
+    position:relative;
+}

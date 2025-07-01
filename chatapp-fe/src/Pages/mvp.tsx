@@ -21,16 +21,17 @@ export default function MainApp() {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
   
-  /* */
-  //Scroll to bottom when new msg will come
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  /* */
+  
 
   const LeaveHandler = () => {
     if(wsRef.current?.readyState === WebSocket.OPEN){
@@ -267,7 +268,7 @@ export default function MainApp() {
                   disabled={isConnecting}
                   className={`${isConnecting ? "cursor-not-allowed" : "cursor-pointer"} submit-btn w-full bg-gradient-to-r from-[#ff4ecd] from-10% to-pink-500 to-90% hover:text-gray-200  text-white py-3 rounded-lg   duration-300 ease-in font-semibold text-lg`}
                 >
-                  {isConnecting ? <ClipLoader color="white" size={20} /> : <span className="flex gap-3 justify-center"><Users/>Join Room</span>}
+                  {isConnecting ? <ClipLoader color="white" size={20} /> : <span className="flex gap-4 justify-center"><Users/>Join Room</span>}
                 </button>
               </div>
             </div>
