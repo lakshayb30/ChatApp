@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
-import {Users} from "lucide-react"
+import {Users, LogOut, Send} from "lucide-react"
 
 interface Message {
   text: string;
@@ -160,78 +160,79 @@ export default function MainApp() {
         <div className="absolute top-2/3 right-1/4 w-1 h-1 bg-amber-300 rounded-full animate-bounce delay-1500"></div>
       </div>
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
+        <div className="text-center mt-10">
           {joined ? (
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 shadow-lg items-center flex justify-between">
-              <div className="text-2xl font-bold text-white bg-blue-700 rounded-xl p-2">
-                  Room  {roomID}
+            <div className="bg-black/60 border border-orange-500/30  backdrop-blur-sm rounded-t-xl p-4 shadow-lg items-center flex justify-between">
+              <div className="relative inline-flex gap-1 items-center">
+                <div className="rounded-full bg-red-500 h-[16px] w-[16px] inline-block mr-2"></div>
+                <div className="rounded-full bg-orange-500 h-[16px] w-[16px] inline-block mr-2"></div>
+                <div className="rounded-full bg-green-500 h-[16px] w-[16px] inline-block mr-2"></div>
+                <div className="text-orange-300 text-xl pl-3 font-semibold">TalkSpace - Room {roomID}</div>
               </div>
-              <div className="font-light text-sm text-white flex gap-2">
-                <div className="bg-green-500 hover:bg-white hover:text-green-500 duration-300 ease-in backdrop-blur-sm shadow-xl items-center flex justify-around gap-2 rounded-xl px-3 border-green-600 font-bold border-[1px] lg:mx-2 h-7">
-                    <div>
-                      <img src="./user.png" className="h-4 " alt="" />
-                    </div>   
-                    <div>
-                      {pplcount}
-                    </div>      
-                </div>
+          
 
-                <div className="bg-blue-500 backdrop-blur-sm hover:bg-white hover:text-blue-500 duration-300 ease-in shadow-xl items-center flex justify-around gap-2 rounded-xl px-3 border-blue-600 font-bold border-[1px] lg:mx-2 h-7">
-                    <div>
-                      <img src="./messenger.png" className="h-4 " alt="" />
-                    </div>   
-                    <div>
-                      {roomscount}
-                    </div>      
-                </div>
-              </div>
-
-              <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5" 
-                onClick={LeaveHandler}><img src="./logout.png" className="h-7 " alt="" />
+              <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5 cursor-pointer" 
+                onClick={LeaveHandler}><LogOut/>
               </div>
             </div>
           ) : (null)}
         </div>
 
         {joined ? (
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
-            <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
-              {messages.map((message, index) => (
-                <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-sm font-medium ${message.sender === 'System' ? 'text-yellow-300' : isOwnMessage(message.sender) ? 'text-blue-100' : 'text-white/70'}`}>
-                      {message.sender}
-                    </span>
-                    <span className="text-xs text-white/50">{message.timestamp}</span>
-                  </div>
-                  <div className={`rounded-lg p-3 shadow-sm max-w-[80%] break-words ${message.sender === 'System' ? 'bg-yellow-500/20 text-yellow-100' : isOwnMessage(message.sender)? 'bg-blue-500 text-white': 'bg-white text-gray-800'}`}>
-                    {message.text}
-                  </div>
-                </div>
-              ))}
-              <div ref={messagesEndRef} />
+          <div className="flex">
+            <div className="bg-black/40 backdrop-blur-sm w-[200px] border-r-0 border-t-0 z-10 rounded-bl-xl border border-orange-500/30">
+              <div className="flex justify-center ">
+                <div className="relative inline-flex mt-5 text-white items-center">
+                <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
+                <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
+                <div>{pplcount} Online</div>
+              </div>
+              </div>
+              
             </div>
-            <div className="p-4 bg-white/20 backdrop-blur-sm">
-              <div className="flex gap-2">
-                <input
-                  ref={inputRef}
-                  placeholder="Type your message..."
-                  className="flex-1 p-3 rounded-lg backdrop-blur-sm  focus:outline-none focus:ring-2 focus:ring-black"
-                  onKeyPress={handleKeyPress}
-                />
-                <button
-                  onClick={() => {
-                    if(joined){
-                    handleSendMessage()
-                  } else{alert("You are not joined | Please Reconnect")}
-                }}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors duration-200"
-                >
-                  Send
-                </button>
+            <div className="bg-black/40 backdrop-blur-sm rounded-br-xl border-orange-500/30 border border-t-0 shadow-xl overflow-hidden w-[700px]">
+              <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
+                {messages.map((message, index) => (
+                  <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-sm font-medium ${message.sender === 'System' ? 'text-yellow-300' : isOwnMessage(message.sender) ? 'text-blue-100' : 'text-white/70'}`}>
+                        {message.sender}
+                      </span>
+                      <span className="text-xs text-white/50">{message.timestamp}</span>
+                    </div>
+                    <div className={`rounded-lg p-3 shadow-sm max-w-[80%] break-words ${message.sender === 'System' ? 'bg-yellow-500/20 text-yellow-100' : isOwnMessage(message.sender)? 'bg-blue-500 text-white': 'bg-white text-gray-800'}`}>
+                      {message.text}
+                    </div>
+                  </div>
+                ))}
+                <div ref={messagesEndRef} />
+              </div>
+              <div className="p-4 bg-black/10 backdrop-blur-sm border-t border-orange-500/30">
+                <div className="group flex items-center">
+                  <input
+                    ref={inputRef}
+                    placeholder="Type your message..."
+                    className="flex-1 p-3 rounded-lg rounded-r-none border-r-0 backdrop-blur-sm bg-gray-700/40 border border-orange-500/30  focus:outline-none focus:border-orange-500/60 group-hover:border-orange-500/60"
+                    onKeyPress={handleKeyPress}
+                  />
+                  <div className="backdrop-blur-sm bg-gray-700/40 p-2 border border-orange-500/30 border-l-0 rounded-lg rounded-l-none  group-hover:border-orange-500/60">
+                    <button
+                      onClick={() => {
+                        if(joined){
+                        handleSendMessage()
+                      } else{alert("You are not joined | Please Reconnect")}
+                    }}
+                      className="hover:scale-105 hover:from-orange-600 hover:to-orange-400 duration-300 bg-gradient-to-br from-orange-700 to-orange-500 hover:bg-purple-700 text-white px-2 py-2 rounded-lg transition-colors  h-8"
+                    >
+                      <Send className="h-5 text-black "/>
+                    </button>
+                  </div>
+                  
+                </div>
               </div>
             </div>
           </div>
+          
         ) : (
           <div className="max-w-md ml-auto mr-auto mt-[13%] flex-column justify-items-center">
             <div className="px-5 py-1 mb-7 rounded-2xl backdrop-blur-sm bg-orange-500/20 hover:bg-orange-500/30 duration-300  text-orange-300 border border-orange-500/40  items-center flex justify-center">
