@@ -12,6 +12,7 @@ const wss = new WebSocketServer({ server  });
 interface User {
     socket : WebSocket;
     room : number;
+    name: string;
 }
 
 let allSockets: User[] = []
@@ -44,6 +45,7 @@ wss.on("connection",(socket) => {
         }
         if(remroom !== undefined){
             const stillexist = allSockets.some(e => e.room === remroom)
+            
             if(!stillexist){
                 const roomIndex = CurrentRooms.indexOf(remroom);
                 if(remroom !== -1){
@@ -62,6 +64,24 @@ wss.on("connection",(socket) => {
     socket.on("message", (message) => {
         const parsedMessage = JSON.parse(message as unknown as string);
         
+        setInterval(() => {
+                    const usersInRoom = allSockets
+                        .filter(user => user.room === parsedMessage.payload.roomID)
+                        .map(user => user.name);
+                    let rmcount = 0;
+                    for(let i=0;i<allSockets.length;i++){
+                        if(allSockets[i].room == parsedMessage.payload.roomID){
+                            rmcount++
+                            allSockets[i].socket.send((
+                                JSON.stringify({
+                                    type:"pplcount",
+                                    count:rmcount,
+                                    names: usersInRoom
+                                })
+                            ))
+                        }
+                    }
+            }, 1000);
 
         if (parsedMessage.type == "join"){
             const rm:number = Number(parsedMessage.payload.roomID);
@@ -77,29 +97,20 @@ wss.on("connection",(socket) => {
                         CurrentRooms.push(rm)
                 }
             } 
+            console.log("Looking for users in room:", parsedMessage.payload.roomID);
 
-           
-           
+            
 
-           setInterval(() => {
-                let rmcount = 0;
-                for(let i=0;i<allSockets.length;i++){
-                    if(allSockets[i].room == parsedMessage.payload.roomID){
-                        rmcount++
-                        allSockets[i].socket.send((
-                            JSON.stringify({
-                                type:"pplcount",
-                                count:rmcount
-                            })
-                        ))
-                    }
-                }
-           }, 1000);
+            
             
             allSockets.push({
                 socket,
-                room: parsedMessage.payload.roomID
+                room: parsedMessage.payload.roomID,
+                name: parsedMessage.payload.name
             })
+            
+
+
            
         }
 

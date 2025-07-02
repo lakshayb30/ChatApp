@@ -21,6 +21,7 @@ export default function MainApp() {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const idRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [membersnames, setmembersnames] = useState<string[]>([]);
 
   
 
@@ -45,7 +46,7 @@ export default function MainApp() {
   const connectWebSocket = () => {
     if (wsRef.current) return;
     setIsConnecting(true);
-    const ws = new WebSocket("wss://chatapp-ecai.onrender.com");
+    const ws = new WebSocket("ws://localhost:8080");
     //const ws = new WebSocket("ws://localhost:8080");
     
     ws.onopen = () => {
@@ -61,6 +62,8 @@ export default function MainApp() {
       }
       else if(data.type == "pplcount"){
         setpplcount(data.count)
+        setmembersnames(data.names)
+        console.log(data.names)
       }
       else{
         
@@ -181,12 +184,25 @@ export default function MainApp() {
         {joined ? (
           <div className="flex">
             <div className="bg-black/40 backdrop-blur-sm w-[200px] border-r-0 border-t-0 z-10 rounded-bl-xl border border-orange-500/30">
-              <div className="flex justify-center ">
-                <div className="relative inline-flex mt-5 text-white items-center">
-                <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
-                <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
-                <div>{pplcount} Online</div>
-              </div>
+              <div >
+                <div className="flex justify-center">
+                  <div className="relative inline-flex mt-5 text-white items-center">
+                    <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
+                    <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
+                    <div>{pplcount} Online {pplcount > 1 ? <span>Users </span> : <span>User </span>}</div>
+                  </div>
+                </div>
+                
+                <div>
+                  {membersnames.map((name, index) => (
+                  <div className="flex gap-2 items-center p-2 bg-white/50 backdrop-blur-sm rounded-full border border-black/50 mx-2 mt-5" key={index}> 
+                    <div className="bg-gradient-to-tr from-orange-500 to-amber-900 px-3 text-white py-1 flex rounded-full shadow-lg shadow-black/50">{name[0].toUpperCase()}</div>
+                     {name}
+                  </div>
+                ))}
+                </div>
+                
+
               </div>
               
             </div>
@@ -245,7 +261,7 @@ export default function MainApp() {
 
             
             
-            <div className="card-content rounded-[12px] p-8 shadow-2xl bg-gradient-to-tl from-gray-900 to-[black] border-orange-500/50 border opacity-0.1 ">
+            <div className="card-content rounded-[12px] p-8 shadow-2xl bg-gradient-to-tl from-gray-900/70 to-black/70 border-orange-500/50 border opacity-0.1 ">
               <div className="flex justify-center mb-4">
                 <h1 className="text-3xl font-semibold text-orange-400  ">Welcome to TalkSpace</h1>
               </div>

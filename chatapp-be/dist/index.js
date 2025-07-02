@@ -44,6 +44,22 @@ wss.on("connection", (socket) => {
     });
     socket.on("message", (message) => {
         const parsedMessage = JSON.parse(message);
+        setInterval(() => {
+            const usersInRoom = allSockets
+                .filter(user => user.room === parsedMessage.payload.roomID)
+                .map(user => user.name);
+            let rmcount = 0;
+            for (let i = 0; i < allSockets.length; i++) {
+                if (allSockets[i].room == parsedMessage.payload.roomID) {
+                    rmcount++;
+                    allSockets[i].socket.send((JSON.stringify({
+                        type: "pplcount",
+                        count: rmcount,
+                        names: usersInRoom
+                    })));
+                }
+            }
+        }, 1000);
         if (parsedMessage.type == "join") {
             const rm = Number(parsedMessage.payload.roomID);
             if (CurrentRooms) {
@@ -57,21 +73,11 @@ wss.on("connection", (socket) => {
                     CurrentRooms.push(rm);
                 }
             }
-            setInterval(() => {
-                let rmcount = 0;
-                for (let i = 0; i < allSockets.length; i++) {
-                    if (allSockets[i].room == parsedMessage.payload.roomID) {
-                        rmcount++;
-                        allSockets[i].socket.send((JSON.stringify({
-                            type: "pplcount",
-                            count: rmcount
-                        })));
-                    }
-                }
-            }, 1000);
+            console.log("Looking for users in room:", parsedMessage.payload.roomID);
             allSockets.push({
                 socket,
-                room: parsedMessage.payload.roomID
+                room: parsedMessage.payload.roomID,
+                name: parsedMessage.payload.name
             });
         }
         if (parsedMessage.type == "chat") {

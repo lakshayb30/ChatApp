@@ -173,8 +173,11 @@ export default function Landing(){
                         
                     </div>
                     <span className="text-center text-gray-300 flex justify-center mt-5 text-xl px-5 font-thin">
-                        Experience the clean and intuitive chat interface
+                        Experience our real-time chat interface with seamless messaging, user presence indicators, and beautiful animations
                     </span>
+                </div>
+                <div>
+                    
                 </div>
             </div>
         )
