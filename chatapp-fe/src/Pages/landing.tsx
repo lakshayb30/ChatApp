@@ -76,7 +76,7 @@ export default function Landing(){
                         </a>
                         
                         <a href="/main">
-                            <div className="sm:mt-0 mt-5  flex items-center gap-3 text-lg border border-orange-500 hover:bg-orange-500 text-orange-500 hover:text-white md:px-6 md:py-3 py-3 px-3 rounded-md transition">
+                            <div className="sm:mt-0 mt-5  flex items-center gap-3 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/25 text-lg border border-orange-500 hover:bg-orange-500 text-orange-500 hover:text-black md:px-6 md:py-3 py-3 px-3 bg-black/50 rounded-md duration-300 font-bold">
                                 <SquareArrowOutUpRight className="md:h-8 h-5 "/>
                                 Get Started
                             </div>

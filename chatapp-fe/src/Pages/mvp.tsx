@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
-import {Users, LogOut, Send} from "lucide-react"
+import {Users, LogOut, Send, Menu, X} from "lucide-react"
 
 interface Message {
   text: string;
@@ -22,7 +22,7 @@ export default function MainApp() {
   const idRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [membersnames, setmembersnames] = useState<string[]>([]);
-
+  const [chatmenu,setchatmenu] = useState<Boolean>(false);
   
 
   const scrollToBottom = () => {
@@ -153,6 +153,26 @@ export default function MainApp() {
   const isOwnMessage = (sender: string) => sender === userName;
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-amber-900 p-4 relative z-10 ">
+      <div className={`${chatmenu && joined ? "md:hidden flex" : "hidden"} absolute h-[90vh] w-[95vw]  justify-center items-center`}>
+        <div className="absolute z-10 bg-white/50 border-2 px-4 py-2 border-orange-500 min-h-[300px] min-w-[300px] rounded-lg backdrop-blur-sm">
+          <div className="flex justify-center">
+            <div className="relative inline-flex mt-5 text-white items-center">
+              <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
+              <div className="absolute animate-ping rounded-full bg-green-400 h-[8px] w-[8px] mr-2"></div>
+              <div>{pplcount} Online {pplcount > 1 ? <span>Users </span> : <span>User </span>}</div>
+            </div>
+          </div>
+          <div>
+            {membersnames.map((name, index) => (
+              <div className="flex gap-2 items-center p-1 bg-white/10 backdrop-blur-lg text-black rounded-lg border border-white/50 mx-2 mt-2" key={index}> 
+                <div className="bg-gradient-to-tr from-purple-900 to-amber-800 px-3 text-white py-1 flex rounded-full ">{name[0].toUpperCase()}</div>
+                  {name}
+                </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-orange-400/20 to-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-amber-400/15 to-orange-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -166,11 +186,23 @@ export default function MainApp() {
         <div className="text-center mt-10">
           {joined ? (
             <div className="bg-black/60 border border-orange-500/30  backdrop-blur-sm rounded-t-xl p-4 shadow-lg items-center flex justify-between">
-              <div className="relative inline-flex gap-1 items-center">
-                <div className="rounded-full bg-red-500 h-[16px] w-[16px] inline-block mr-2"></div>
-                <div className="rounded-full bg-orange-500 h-[16px] w-[16px] inline-block mr-2"></div>
-                <div className="rounded-full bg-green-500 h-[16px] w-[16px] inline-block mr-2"></div>
-                <div className="text-orange-300 text-xl pl-3 font-semibold">TalkSpace - Room {roomID}</div>
+              <div className="relative inline-flex gap-2 items-center">
+                
+                
+                <div className="text-orange-300 text-xl pl-3 gap-5 font-semibold flex items-center">
+                  <div className="items-center md:inline-flex hidden">
+                    <div className="rounded-full bg-red-500 h-[16px] w-[16px] inline-block mr-2"></div>
+                    <div className="rounded-full bg-orange-500 h-[16px] w-[16px] inline-block mr-2"></div>
+                    <div className="rounded-full bg-green-500 h-[16px] w-[16px] inline-block mr-2"></div>
+                  </div>
+                  <div className="md:hidden flex text-orange-400 items-center pl-[10px]">
+                    <Menu className={`${chatmenu ? "hidden" : ""}`} onClick={() => setchatmenu(e => !e)}/>
+                    <X className={`${chatmenu ? "" : "hidden"}`} onClick={() => setchatmenu(e => !e)}/>
+                  </div> 
+                  
+                  <span className="flex text-2xl"><span className="sm:flex hidden">TalkSpace -&nbsp; </span> Room {roomID}</span>
+                   
+                </div>
               </div>
           
 
@@ -183,7 +215,7 @@ export default function MainApp() {
 
         {joined ? (
           <div className="flex">
-            <div className="bg-black/40 backdrop-blur-sm w-[200px] border-r-0 border-t-0 z-10 rounded-bl-xl border border-orange-500/30">
+            <div className="md:block hidden bg-black/40 backdrop-blur-sm w-[200px] border-r-0 border-t-0 z-10 rounded-bl-xl border border-orange-500/30">
               <div >
                 <div className="flex justify-center">
                   <div className="relative inline-flex mt-5 text-white items-center">
@@ -195,18 +227,18 @@ export default function MainApp() {
                 
                 <div>
                   {membersnames.map((name, index) => (
-                  <div className="flex gap-2 items-center p-2 bg-white/50 backdrop-blur-sm rounded-full border border-black/50 mx-2 mt-5" key={index}> 
-                    <div className="bg-gradient-to-tr from-orange-500 to-amber-900 px-3 text-white py-1 flex rounded-full shadow-lg shadow-black/50">{name[0].toUpperCase()}</div>
-                     {name}
-                  </div>
-                ))}
+                    <div className="flex gap-2 items-center p-1 bg-white/10 backdrop-blur-lg text-white rounded-lg border border-white/50 mx-2 mt-5" key={index}> 
+                      <div className="bg-gradient-to-tr from-purple-900 to-amber-800 px-3 text-white py-1 flex rounded-full ">{name[0].toUpperCase()}</div>
+                      {name}
+                    </div>
+                  ))}
                 </div>
                 
 
               </div>
               
             </div>
-            <div className="bg-black/40 backdrop-blur-sm rounded-br-xl border-orange-500/30 border border-t-0 shadow-xl overflow-hidden w-[700px]">
+            <div className="bg-black/40 backdrop-blur-sm rounded-br-xl border-orange-500/30 border border-t-0 shadow-xl overflow-hidden md:w-[700px] w-[800px]">
               <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
                 {messages.map((message, index) => (
                   <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
@@ -228,7 +260,7 @@ export default function MainApp() {
                   <input
                     ref={inputRef}
                     placeholder="Type your message..."
-                    className="flex-1 p-3 rounded-lg rounded-r-none border-r-0 backdrop-blur-sm bg-gray-700/40 border border-orange-500/30  focus:outline-none focus:border-orange-500/60 group-hover:border-orange-500/60"
+                    className="flex-1 text-white p-3 rounded-lg rounded-r-none border-r-0 backdrop-blur-sm bg-gray-700/40 border border-orange-500/30  focus:outline-none  group-hover:border-orange-500/60"
                     onKeyPress={handleKeyPress}
                   />
                   <div className="backdrop-blur-sm bg-gray-700/40 p-2 border border-orange-500/30 border-l-0 rounded-lg rounded-l-none  group-hover:border-orange-500/60">
