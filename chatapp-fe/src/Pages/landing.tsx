@@ -1,4 +1,4 @@
-import {  Github, SquareArrowOutUpRight, Menu, X, Zap ,MonitorSmartphone, UsersRound, MessageSquare, Settings, Lock} from "lucide-react"
+import {  Github, SquareArrowOutUpRight, Menu, X, Zap ,MonitorSmartphone, UsersRound, MessageSquare, Settings, Lock, ArrowRight, Circle} from "lucide-react"
 import { useState , useRef} from "react"
 
 export default function Landing(){
@@ -163,10 +163,24 @@ export default function Landing(){
     }
 
     function Preview(){
+        function Card(props:any){
+            return(
+                <div className="hover:scale-105 py-8 px-[50px] mt-5 bg-orange-500/30 border-orange-500/30 border backdrop-blur-md rounded-xl md:w-[100%] sm:w-[600px] hover:scale-105 duration-300">
+                    <div className="flex justify-center mb-5">
+                        <div className="bg-gradient-to-tr from-orange-700 to-orange-500 text-black rounded-full p-3 ">
+                            {props.children}
+                        </div>
+                        
+                    </div>
+                    <div className="text-md text-center font-bold text-white">{props.head}</div>
+                    <div className="text-white/50 text-center text-xs font-semibold pt-1">{props.base}</div>
+                </div>
+            )
+        }
         return(
-            <div className="min-h-screen bg-gradient-to-bl from-black via-gray-900 to-gray-700/100">
+            <div className="max-h-screen bg-gradient-to-bl py-[100px] from-black via-gray-800 to-gray-600/80">
                 <div className="relative">
-                    <div className="flex justify-center pt-[100px] ">
+                    <div className="flex justify-center  ">
                         <span className="sm:text-4xl text-3xl font-bold text-white">
                             See it in <span className="bg-clip-text bg-gradient-to-l from-orange-400 to-orange-600 text-transparent">Action</span>
                         </span>
@@ -176,8 +190,27 @@ export default function Landing(){
                         Experience our real-time chat interface with seamless messaging, user presence indicators, and beautiful animations
                     </span>
                 </div>
-                <div>
-                    
+                <div className="flex justify-center mt-[50px]">
+                    <a href="/main">
+                        <div className="flex bg-gradient-to-br from-orange-800 to-orange-500 hover:scale-105 duration-300 hover:from-orange-700 hover:shadow-lg hover:shadow-orange-700/40 hover:to-orange-400 justify-center rounded-xl py-3 px-1 items-center gap-2 font-semibold w-[250px]" >
+                            <MessageSquare className="md:h-6 h-5 "/>
+                            Try TalkSpace Now
+                            <ArrowRight/>
+                        </div>
+                    </a>
+                </div>
+                <div className="flex justify-center mt-10">
+                    <div className="md:flex gap-8">
+                        <Card head="Real-time Messaging" base="Instant message delivery with WebSocket technology">
+                            <MessageSquare/>
+                        </Card>
+                        <Card head="User Presence" base="See who's online, away, or actively typing">
+                            <UsersRound/>
+                        </Card>
+                        <Card head="Modern Design" base="Beautiful gradients and smooth animations">
+                            <Circle className="fill-black"/>
+                        </Card>
+                    </div>                
                 </div>
             </div>
         )
