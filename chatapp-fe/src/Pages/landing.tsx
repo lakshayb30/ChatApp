@@ -6,7 +6,7 @@ export default function Landing(){
     function Header(){
         const [menu,setmenu] = useState(false)
         return (
-            <div className="z-50  backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/80 text-white top-0 left-0 w-full px-8 py-4 flex items-center justify-around ">
+            <div className="z-50  backdrop-blur-lg  border-b-2 border-orange-600 items-center fixed bg-black/80 text-white top-0 left-0 w-screen px-8 py-4 flex items-center justify-between md:justify-around ">
                 <div className="text-orange-400 font-bold text-2xl">
                     <a href="/">TalkSpace</a>
                 </div>
@@ -165,7 +165,7 @@ export default function Landing(){
     function Preview(){
         function Card(props:any){
             return(
-                <div className="hover:scale-105 py-8 px-[50px] mt-5 bg-orange-500/30 border-orange-500/30 border backdrop-blur-md rounded-xl md:w-[100%] sm:w-[600px] hover:scale-105 duration-300">
+                <div className="hover:scale-105 py-8 px-[50px] mt-5 bg-orange-500/30 border-orange-500/30 border backdrop-blur-md rounded-xl md:w-[100%] sm:w-[600px] w-[300px] hover:scale-105 duration-300">
                     <div className="flex justify-center mb-5">
                         <div className="bg-gradient-to-tr from-orange-700 to-orange-500 text-black rounded-full p-3 ">
                             {props.children}
@@ -178,7 +178,7 @@ export default function Landing(){
             )
         }
         return(
-            <div className="max-h-screen bg-gradient-to-bl py-[100px] from-black via-gray-800 to-gray-600/80">
+            <div className="md:max-h-screen min-h-screen bg-gradient-to-bl py-[100px] from-black via-gray-800 to-gray-600/80">
                 <div className="relative">
                     <div className="flex justify-center  ">
                         <span className="sm:text-4xl text-3xl font-bold text-white">
