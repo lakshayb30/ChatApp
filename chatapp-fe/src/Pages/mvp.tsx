@@ -206,8 +206,10 @@ export default function MainApp() {
               </div>
           
 
-              <div className="bg-red-500 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5 cursor-pointer" 
-                onClick={LeaveHandler}><LogOut/>
+              <div className="bg-red-500 flex gap-2 p-2 rounded-lg hover:bg-red-600 duration-200 ease-in hover:scale-105 mr-5 cursor-pointer" 
+                onClick={LeaveHandler}>
+                  <LogOut/> 
+                  <span className="sm:block hidden text-black font-bold font-mono ">Leave Room</span>
               </div>
             </div>
           ) : (null)}
@@ -227,8 +229,8 @@ export default function MainApp() {
                 
                 <div>
                   {membersnames.map((name, index) => (
-                    <div className="flex gap-2 items-center p-1 bg-white/10 backdrop-blur-lg text-white rounded-lg border border-white/50 mx-2 mt-5" key={index}> 
-                      <div className="bg-gradient-to-tr from-purple-900 to-amber-800 px-3 text-white py-1 flex rounded-full ">{name[0].toUpperCase()}</div>
+                    <div className="flex gap-2 items-center p-1  text-white rounded-xl mx-2 mt-4" key={index}> 
+                      <div className="bg-gradient-to-tr from-purple-900 to-amber-800 px-3 text-white py-1  flex rounded-full ">{name[0].toUpperCase()}</div>
                       {name}
                     </div>
                   ))}
@@ -242,13 +244,13 @@ export default function MainApp() {
               <div className="h-[60vh] overflow-y-auto p-4 space-y-4">
                 {messages.map((message, index) => (
                   <div key={index} className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-sm font-medium ${message.sender === 'System' ? 'text-yellow-300' : isOwnMessage(message.sender) ? 'text-blue-100' : 'text-white/70'}`}>
+                    <div className={`flex flex-col ${isOwnMessage(message.sender) ? 'items-end' : 'items-start'} mb-2`}>
+                      <span className={`text-xs font-medium ${isOwnMessage(message.sender) ? 'text-blue-100' : 'text-white/70'}`}>
                         {message.sender}
                       </span>
                       <span className="text-xs text-white/50">{message.timestamp}</span>
                     </div>
-                    <div className={`rounded-lg p-3 shadow-sm max-w-[80%] break-words ${message.sender === 'System' ? 'bg-yellow-500/20 text-yellow-100' : isOwnMessage(message.sender)? 'bg-blue-500 text-white': 'bg-white text-gray-800'}`}>
+                    <div className={`rounded-lg px-3 py-2 shadow-sm max-w-[80%] break-words ${isOwnMessage(message.sender)? 'bg-slate-800/50 text-white border border-slate-300/50 rounded-br-none': 'bg-amber-800/50 text-white border border-amber-300/50 rounded-bl-none'}`}>
                       {message.text}
                     </div>
                   </div>
